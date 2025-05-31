@@ -6,15 +6,14 @@ cd /d "%~dp0.."
 
 echo Starting development environment...
 
-REM Check for uncommitted changes
-git diff --quiet
+REM Check for uncommitted changes (ignoring line endings)
+git diff --quiet --ignore-cr-at-eol
 if %errorlevel% neq 0 (
     echo WARNING: You have uncommitted changes in your repository.
-    echo Please commit or stash your changes before proceeding.
+    echo This is safe to continue, but make sure to commit your changes when ready.
     echo.
-    echo Press any key to exit...
-    pause > nul
-    exit /b 1
+    choice /C YN /M "Do you want to continue"
+    if errorlevel 2 exit /b 1
 )
 
 REM Check if Docker is running
@@ -34,7 +33,7 @@ if %errorlevel% equ 0 (
     call scripts\cleanup-ports.bat
 )
 
-netstat -ano | findstat ":4000" > nul
+netstat -ano | findstr ":4000" > nul
 if %errorlevel% equ 0 (
     echo Port 4000 is in use. Running cleanup script...
     call scripts\cleanup-ports.bat
