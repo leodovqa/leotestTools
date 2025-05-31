@@ -6,89 +6,65 @@ cd /d "%~dp0.."
 
 echo Starting development environment...
 
+REM Check for uncommitted changes
+git diff --quiet
+if %errorlevel% neq 0 (
+    echo WARNING: You have uncommitted changes in your repository.
+    echo Please commit or stash your changes before proceeding.
+    echo.
+    echo Press any key to exit...
+    pause > nul
+    exit /b 1
+)
+
 REM Check if Docker is running
 docker info > nul 2>&1
-if errorlevel 1 (
-    echo Docker is not running. Please start Docker and try again.
-    exit /b 1
-)
-
-REM Check if docker-compose is installed
-docker-compose version > nul 2>&1
-if errorlevel 1 (
-    echo docker-compose is not installed. Please install it and try again.
-    exit /b 1
-)
-
-REM Check if port 3000 is in use
-netstat -ano | findstr :3000 > nul
-if not errorlevel 1 (
-    echo Port 3000 is already in use. Please free up the port and try again.
-    exit /b 1
-)
-
-REM Check for uncommitted changes
-git status --porcelain > nul 2>&1
-if not errorlevel 1 (
-    echo Warning: You have uncommitted changes in your repository.
-    echo This is safe to continue, but make sure to commit your changes when ready.
+if %errorlevel% neq 0 (
+    echo Docker is not running. Please start Docker Desktop first.
     echo.
-    choice /C YN /M "Do you want to continue"
-    if errorlevel 2 exit /b 1
-)
-
-echo.
-echo Choose development environment:
-echo 1. Docker (recommended for consistent development)
-echo 2. Local (faster but requires local Node.js setup)
-echo.
-
-choice /C 12 /M "Select development environment"
-if errorlevel 2 goto local_dev
-if errorlevel 1 goto docker_dev
-
-:docker_dev
-echo.
-echo Starting Docker development environment...
-echo Note: This will not affect your local files or Git repository.
-echo.
-
-REM Start containers without removing volumes on exit
-docker-compose up --build
-goto cleanup
-
-:local_dev
-echo.
-echo Starting local development environment...
-echo.
-
-REM Check if Node.js is installed
-node --version > nul 2>&1
-if errorlevel 1 (
-    echo Error: Node.js is not installed. Please install Node.js to use local development.
+    echo Press any key to exit...
+    pause > nul
     exit /b 1
 )
 
-REM Check if npm is installed
-npm --version > nul 2>&1
-if errorlevel 1 (
-    echo Error: npm is not installed. Please install npm to use local development.
+REM Check if ports are in use
+netstat -ano | findstr ":3000" > nul
+if %errorlevel% equ 0 (
+    echo Port 3000 is in use. Running cleanup script...
+    call scripts\cleanup-ports.bat
+)
+
+netstat -ano | findstat ":4000" > nul
+if %errorlevel% equ 0 (
+    echo Port 4000 is in use. Running cleanup script...
+    call scripts\cleanup-ports.bat
+)
+
+echo.
+echo Choose development mode:
+echo 1. Run with Docker (detached - terminal free for other commands)
+echo 2. Run with Docker (attached - see all logs in terminal)
+echo 3. Run without Docker (local development)
+echo.
+
+set /p choice="Enter your choice (1-3): "
+
+if "%choice%"=="1" (
+    echo Starting Docker in detached mode...
+    docker-compose up -d
+    echo.
+    echo Docker is running in detached mode.
+    echo To view logs, run: docker-compose logs -f
+    echo To stop Docker, run: docker-compose down
+) else if "%choice%"=="2" (
+    echo Starting Docker in attached mode...
+    docker-compose up
+) else if "%choice%"=="3" (
+    echo Starting local development...
+    npm run dev
+) else (
+    echo Invalid choice. Please run the script again and select 1, 2, or 3.
     exit /b 1
 )
 
-REM Install dependencies if needed
-if not exist node_modules (
-    echo Installing dependencies...
-    npm install
-)
-
-REM Start local development server
-npm run dev
-goto cleanup
-
-:cleanup
-echo Stopping development environment...
-if "%errorlevel%"=="1" (
-    docker-compose down
-)
-exit /b 0 
+pause 

@@ -21,8 +21,8 @@ check_docker_compose() {
 
 # Function to check if ports are available
 check_ports() {
-    if lsof -i :3000 > /dev/null 2>&1; then
-        echo "Port 3000 is already in use. Please free up the port and try again."
+    if lsof -i :4000 > /dev/null 2>&1; then
+        echo "Port 4000 is already in use. Please free up the port and try again."
         exit 1
     fi
 }
@@ -79,7 +79,7 @@ start_local_dev() {
     fi
 
     # Start local development server
-    npm run dev
+    PORT=4000 npm run dev
 }
 
 # Function to clean up
@@ -104,25 +104,33 @@ check_ports
 check_git_status
 
 echo
-echo "Choose development environment:"
-echo "1. Docker (recommended for consistent development)"
-echo "2. Local (faster but requires local Node.js setup)"
+echo "Choose development mode:"
+echo "1. Run with Docker (detached - terminal free for other commands)"
+echo "2. Run with Docker (attached - see all logs in terminal)"
+echo "3. Run without Docker (local development)"
 echo
 
-read -p "Select development environment (1/2): " choice
-echo
+read -p "Enter your choice (1-3): " choice
 
 case $choice in
     1)
-        export DEV_MODE="docker"
-        start_docker_dev
+        echo "Starting Docker in detached mode..."
+        docker-compose up -d
+        echo
+        echo "Docker is running in detached mode."
+        echo "To view logs, run: docker-compose logs -f"
+        echo "To stop Docker, run: docker-compose down"
         ;;
     2)
-        export DEV_MODE="local"
-        start_local_dev
+        echo "Starting Docker in attached mode..."
+        docker-compose up
+        ;;
+    3)
+        echo "Starting local development..."
+        npm run dev
         ;;
     *)
-        echo "Invalid choice. Exiting..."
+        echo "Invalid choice. Please run the script again and select 1, 2, or 3."
         exit 1
         ;;
 esac 
