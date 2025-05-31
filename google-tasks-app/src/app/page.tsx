@@ -28,7 +28,7 @@ export default function Home() {
               <button
                 onClick={() => signOut()}
                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
-              >
+          >
                 Sign out
               </button>
             </div>
@@ -38,7 +38,7 @@ export default function Home() {
             </div>
           </div>
         )}
-      </div>
-    </main>
+        </div>
+      </main>
   );
 }

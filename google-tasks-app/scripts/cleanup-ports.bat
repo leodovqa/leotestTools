@@ -58,5 +58,4 @@ call :kill_port 4000
 
 echo.
 echo Port cleanup complete.
-echo You can now run the development script.
-pause 
+echo You can now run the development script. 
