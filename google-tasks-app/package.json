@@ -12,7 +12,8 @@
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next-auth": "^4.24.7"
+    "next-auth": "^4.24.7",
+    "next-auth/providers/google": "^2.3.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

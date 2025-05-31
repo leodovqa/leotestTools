@@ -67,7 +67,7 @@ if "%choice%"=="1" (
     echo To stop Docker, run: docker-compose down
     echo.
     echo Opening application in browser...
-    start http://localhost:4000
+    start http://localhost:3000
     exit /b 0
 ) else if "%choice%"=="2" (
     echo Starting Docker in attached mode...
@@ -78,14 +78,14 @@ if "%choice%"=="1" (
     echo Starting containers...
     
     REM Start the browser in a separate process
-    start http://localhost:4000
+    start http://localhost:3000
     
     docker-compose up
 ) else if "%choice%"=="3" (
     echo Starting local development...
     
     REM Start the browser in a separate process
-    start http://localhost:4000
+    start http://localhost:3000
     
     npm run dev
 ) else (

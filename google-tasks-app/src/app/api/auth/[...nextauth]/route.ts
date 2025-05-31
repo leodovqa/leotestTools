@@ -1,5 +1,6 @@
-import NextAuth, { DefaultSession, Account } from 'next-auth';
-import GoogleProvider from '@auth/google-provider';
+import NextAuth, { DefaultSession, Account, User } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+import { JWT } from "next-auth/jwt";
 
 declare module 'next-auth' {
   interface Session extends DefaultSession {
@@ -7,8 +8,10 @@ declare module 'next-auth' {
   }
 }
 
-interface Token {
-  accessToken?: string;
+declare module "next-auth/jwt" {
+  interface JWT {
+    accessToken?: string;
+  }
 }
 
 const handler = NextAuth({
@@ -24,13 +27,13 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, account }: { token: Token; account: Account | null }) {
+    async jwt({ token, account, user }: { token: JWT; account: Account | null; user: User | null }) {
       if (account) {
         token.accessToken = account.access_token;
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: Token }) {
+    async session({ session, token }: { session: any; token: JWT }) {
       session.accessToken = token.accessToken;
       return session;
     },

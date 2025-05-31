@@ -120,13 +120,25 @@ case $choice in
         echo "Docker is running in detached mode."
         echo "To view logs, run: docker-compose logs -f"
         echo "To stop Docker, run: docker-compose down"
+        echo
+        echo "Opening application in browser..."
+        open http://localhost:3000
         ;;
     2)
         echo "Starting Docker in attached mode..."
+        echo "Starting containers..."
+
+        # Start the browser in a separate process
+        open http://localhost:3000
+
         docker-compose up
         ;;
     3)
         echo "Starting local development..."
+
+        # Start the browser in a separate process
+        open http://localhost:3000
+
         npm run dev
         ;;
     *)
