@@ -37,15 +37,58 @@ if not errorlevel 1 (
     if errorlevel 2 exit /b 1
 )
 
-echo Building and starting containers...
+echo.
+echo Choose development environment:
+echo 1. Docker (recommended for consistent development)
+echo 2. Local (faster but requires local Node.js setup)
+echo.
+
+choice /C 12 /M "Select development environment"
+if errorlevel 2 goto local_dev
+if errorlevel 1 goto docker_dev
+
+:docker_dev
+echo.
+echo Starting Docker development environment...
 echo Note: This will not affect your local files or Git repository.
 echo.
 
 REM Start containers without removing volumes on exit
 docker-compose up --build
+goto cleanup
 
-REM Cleanup on exit (without removing volumes)
+:local_dev
+echo.
+echo Starting local development environment...
+echo.
+
+REM Check if Node.js is installed
+node --version > nul 2>&1
+if errorlevel 1 (
+    echo Error: Node.js is not installed. Please install Node.js to use local development.
+    exit /b 1
+)
+
+REM Check if npm is installed
+npm --version > nul 2>&1
+if errorlevel 1 (
+    echo Error: npm is not installed. Please install npm to use local development.
+    exit /b 1
+)
+
+REM Install dependencies if needed
+if not exist node_modules (
+    echo Installing dependencies...
+    npm install
+)
+
+REM Start local development server
+npm run dev
+goto cleanup
+
 :cleanup
-echo Stopping containers...
-docker-compose down
+echo Stopping development environment...
+if "%errorlevel%"=="1" (
+    docker-compose down
+)
 exit /b 0 

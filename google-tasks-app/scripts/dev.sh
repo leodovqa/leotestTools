@@ -41,15 +41,58 @@ check_git_status() {
     fi
 }
 
-# Function to clean up containers
+# Function to check Node.js and npm
+check_node_environment() {
+    if ! command -v node &> /dev/null; then
+        echo "Error: Node.js is not installed. Please install Node.js to use local development."
+        exit 1
+    fi
+
+    if ! command -v npm &> /dev/null; then
+        echo "Error: npm is not installed. Please install npm to use local development."
+        exit 1
+    fi
+}
+
+# Function to start Docker development
+start_docker_dev() {
+    echo
+    echo "Starting Docker development environment..."
+    echo "Note: This will not affect your local files or Git repository."
+    echo
+    docker-compose up --build
+}
+
+# Function to start local development
+start_local_dev() {
+    echo
+    echo "Starting local development environment..."
+    echo
+
+    # Check Node.js environment
+    check_node_environment
+
+    # Install dependencies if needed
+    if [ ! -d "node_modules" ]; then
+        echo "Installing dependencies..."
+        npm install
+    fi
+
+    # Start local development server
+    npm run dev
+}
+
+# Function to clean up
 cleanup() {
-    echo "Stopping containers..."
-    docker-compose down
+    echo "Stopping development environment..."
+    if [ "$1" = "docker" ]; then
+        docker-compose down
+    fi
     exit 0
 }
 
 # Set up trap for cleanup
-trap cleanup SIGINT SIGTERM
+trap 'cleanup $DEV_MODE' SIGINT SIGTERM
 
 # Main script
 echo "Starting development environment..."
@@ -60,12 +103,26 @@ check_docker_compose
 check_ports
 check_git_status
 
-echo "Building and starting containers..."
-echo "Note: This will not affect your local files or Git repository."
+echo
+echo "Choose development environment:"
+echo "1. Docker (recommended for consistent development)"
+echo "2. Local (faster but requires local Node.js setup)"
 echo
 
-# Build and start containers
-docker-compose up --build
+read -p "Select development environment (1/2): " choice
+echo
 
-# Keep script running
-wait 
+case $choice in
+    1)
+        export DEV_MODE="docker"
+        start_docker_dev
+        ;;
+    2)
+        export DEV_MODE="local"
+        start_local_dev
+        ;;
+    *)
+        echo "Invalid choice. Exiting..."
+        exit 1
+        ;;
+esac 
