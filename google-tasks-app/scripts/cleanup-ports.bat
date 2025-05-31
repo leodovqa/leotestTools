@@ -5,8 +5,6 @@ echo Checking for processes using ports 3000 and 4000...
 echo WARNING: This will only kill processes using ports 3000 and 4000.
 echo If you have other applications using these ports, they will be stopped.
 echo.
-echo Press any key to continue or Ctrl+C to cancel...
-pause > nul
 
 REM Function to check if process is related to our project
 :is_project_process
