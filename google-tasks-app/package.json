@@ -12,8 +12,7 @@
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next-auth": "^4.24.7",
-    "next-auth/providers/google": "^2.3.0"
+    "next-auth": "^4.24.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -26,9 +25,5 @@
     "eslint-config-next": "15.3.3",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "optionalDependencies": {
-    "lightningcss-linux-x64-gnu": "^1.21.0",
-    "lightningcss-linux-x64-musl": "^1.21.0"
   }
 }

@@ -82,6 +82,41 @@ The Docker development environment includes:
 - Health checks for container status
 - Automatic cleanup on exit
 
+## Development with Dev Containers (Recommended for Windows)
+
+This project uses Dev Containers for a consistent development environment. This approach is recommended for Windows users as it provides better performance and integration than Docker Desktop.
+
+### Prerequisites
+
+1. Install [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install)
+2. Install [Visual Studio Code](https://code.visualstudio.com/)
+3. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) in VS Code
+
+### Getting Started
+
+1. Open the project in VS Code
+2. When prompted, click "Reopen in Container" or use the command palette (F1) and select "Dev Containers: Reopen in Container"
+3. Wait for the container to build and start
+4. The development server will be available at http://localhost:3000
+
+### Features
+
+- Full Node.js development environment
+- Pre-configured ESLint and Prettier
+- Tailwind CSS support
+- TypeScript support
+- Git integration
+- GitHub CLI tools
+
+### Benefits over Docker Desktop
+
+- Better performance on Windows
+- Native file system access
+- Direct hardware access
+- No need for Docker Desktop
+- Better integration with Windows tools
+- Smaller resource footprint
+
 ## Development
 
 - `npm run dev` - Start development server (local)
