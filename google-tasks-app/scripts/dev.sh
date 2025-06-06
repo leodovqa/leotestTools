@@ -21,8 +21,8 @@ check_docker_compose() {
 
 # Function to check if ports are available
 check_ports() {
-    if lsof -i :4000 > /dev/null 2>&1; then
-        echo "Port 4000 is already in use. Please free up the port and try again."
+    if lsof -i :3000 > /dev/null 2>&1; then
+        echo "Port 3000 is already in use. Please free up the port and try again."
         exit 1
     fi
 }

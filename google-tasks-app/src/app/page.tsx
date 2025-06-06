@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useSession, signIn, signOut } from 'next-auth/react';
-import TaskList from '@/components/TaskList';
+import { useSession, signIn, signOut } from "next-auth/react";
+import TaskList from "@/components/TaskList";
 
 export default function Home() {
   const { data: session } = useSession();
 
   return (
-    <main className="min-h-screen p-8 bg-gray-50">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen p-8">
+      <div className="max-w-4xl mx-auto flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold mb-8">Google Tasks Manager</h1>
-        
+
         {!session ? (
           <div className="text-center">
             <p className="mb-4">Please sign in to manage your tasks</p>
             <button
-              onClick={() => signIn('google')}
+              onClick={() => signIn("google")}
               className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
             >
               Sign in with Google
@@ -28,7 +28,7 @@ export default function Home() {
               <button
                 onClick={() => signOut()}
                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
-          >
+              >
                 Sign out
               </button>
             </div>
@@ -38,7 +38,7 @@ export default function Home() {
             </div>
           </div>
         )}
-        </div>
-      </main>
+      </div>
+    </main>
   );
 }
