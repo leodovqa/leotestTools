@@ -23,12 +23,6 @@ if %errorlevel% equ 0 (
     call scripts\cleanup-ports.bat
 )
 
-netstat -ano | findstr ":4000" > nul
-if %errorlevel% equ 0 (
-    echo Port 4000 is in use. Running cleanup script...
-    call scripts\cleanup-ports.bat
-)
-
 echo.
 echo Starting local development...
 echo.
