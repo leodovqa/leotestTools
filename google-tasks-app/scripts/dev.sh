@@ -145,4 +145,11 @@ case $choice in
         echo "Invalid choice. Please run the script again and select 1, 2, or 3."
         exit 1
         ;;
-esac 
+esac
+
+# Navigate to the google-tasks-app directory (if not already there)
+# This might be necessary depending on where you run the script from
+# cd google-tasks-app
+
+# Run the development server
+npm run dev 
