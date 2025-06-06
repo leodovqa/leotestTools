@@ -43,9 +43,9 @@ const handler = NextAuth({
       name: '__Host-next-auth.state',
       options: {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none',
         path: '/',
-        secure: true
+        secure: process.env.NODE_ENV === 'production'
       }
     }
   }

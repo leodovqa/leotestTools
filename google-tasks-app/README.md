@@ -40,13 +40,13 @@ npm install
    - Create a new project
    - Enable the Google Tasks API and Google Calendar API
    - Create OAuth 2.0 credentials
-   - Add authorized redirect URIs (e.g., http://localhost:4000/api/auth/callback/google)
+   - Add authorized redirect URIs (e.g., http://localhost:3000/api/auth/callback/google)
 
 4. Create a `.env.local` file in the root directory with the following variables:
 ```
 GOOGLE_CLIENT_ID=your_client_id_here
 GOOGLE_CLIENT_SECRET=your_client_secret_here
-NEXTAUTH_URL=http://localhost:4000
+NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your_nextauth_secret_here
 ```
 
@@ -74,7 +74,7 @@ npm run dev
    ./scripts/dev.sh
    ```
 
-4. The application will be available at http://localhost:4000
+4. The application will be available at http://localhost:3000
 
 The Docker development environment includes:
 - Hot reloading for instant updates
