@@ -21,7 +21,7 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
-          scope: 'https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/calendar',
+          scope: 'openid profile email https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/calendar',
         },
       },
     }),
@@ -38,6 +38,17 @@ const handler = NextAuth({
       return session;
     },
   },
+  cookies: {
+    state: {
+      name: '__Host-next-auth.state',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true
+      }
+    }
+  }
 });
 
 export { handler as GET, handler as POST }; 
