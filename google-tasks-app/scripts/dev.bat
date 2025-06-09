@@ -16,13 +16,6 @@ if %errorlevel% neq 0 (
     if errorlevel 2 exit /b 1
 )
 
-REM Check if ports are in use
-netstat -ano | findstr ":3000" > nul
-if %errorlevel% equ 0 (
-    echo Port 3000 is in use. Running cleanup script...
-    call scripts\cleanup-ports.bat
-)
-
 echo.
 echo Starting local development...
 echo.
