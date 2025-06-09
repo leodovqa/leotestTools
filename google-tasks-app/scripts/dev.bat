@@ -27,8 +27,6 @@ echo.
 echo Starting local development...
 echo.
 
-set /p choice="Press Enter to continue..."
-
 REM Start the browser in a separate process
 start http://localhost:3000
 
