@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #111827;
+  --foreground: #f3f4f6;
+  --card-background: #1f2937;
+  --card-border: #374151;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --accent: #8b5cf6;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family:
+    var(--font-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  h1 {
+    @apply text-4xl font-bold tracking-tight;
+  }
+  h2 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  p {
+    @apply text-base leading-7 text-[var(--text-secondary)];
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg shadow-lg backdrop-blur-sm;
+  }
+
+  .btn-primary {
+    @apply bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white px-6 py-2.5 rounded-lg transition-colors font-medium tracking-wide;
+  }
+
+  .btn-danger {
+    @apply bg-[var(--danger)] hover:bg-[var(--danger-hover)] text-white px-4 py-2.5 rounded-lg transition-colors font-medium tracking-wide;
+  }
+
+  .welcome-text {
+    @apply text-lg font-medium text-[var(--text-primary)];
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] bg-clip-text text-transparent font-bold tracking-tight;
+  }
+}

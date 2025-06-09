@@ -7,33 +7,32 @@ export default function Home() {
   const { data: session } = useSession();
 
   return (
-    <main className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-bold mb-8">Google Tasks Manager</h1>
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[var(--background)] to-[var(--card-background)] p-4">
+      <div className="w-full max-w-2xl flex flex-col items-center justify-center space-y-8">
+        <h1 className="gradient-text text-5xl mb-2 text-center">
+          Google Tasks Manager
+        </h1>
 
         {!session ? (
-          <div className="text-center">
-            <p className="mb-4">Please sign in to manage your tasks</p>
+          <div className="text-center card p-8 w-full">
+            <p className="mb-8">Please sign in to manage your tasks</p>
             <button
               onClick={() => signIn("google")}
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+              className="btn-primary w-full"
             >
               Sign in with Google
             </button>
           </div>
         ) : (
-          <div>
-            <div className="flex justify-between items-center mb-8">
-              <p>Welcome, {session.user?.name}</p>
-              <button
-                onClick={() => signOut()}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
-              >
+          <div className="w-full space-y-6">
+            <div className="flex justify-between items-center card p-4">
+              <p className="welcome-text">Welcome, {session.user?.name}</p>
+              <button onClick={() => signOut()} className="btn-danger">
                 Sign out
               </button>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Your Tasks</h2>
+            <div className="card p-6">
+              <h2 className="mb-6">Your Tasks</h2>
               <TaskList />
             </div>
           </div>

@@ -21,17 +21,20 @@ A web application that integrates with Google Tasks API and syncs with Google Ca
 ## Setup
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd google-tasks-app
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Create a Google Cloud Project and enable the necessary APIs:
+
    - Go to the [Google Cloud Console](https://console.cloud.google.com)
    - Create a new project
    - Enable the Google Tasks API and Google Calendar API
@@ -39,6 +42,7 @@ npm install
    - Add authorized redirect URIs (e.g., http://localhost:3000/api/auth/callback/google)
 
 4. Create a `.env.local` file in the root directory with the following variables:
+
 ```
 GOOGLE_CLIENT_ID=your_client_id_here
 GOOGLE_CLIENT_SECRET=your_client_secret_here
@@ -47,6 +51,7 @@ NEXTAUTH_SECRET=your_nextauth_secret_here
 ```
 
 5. Run the development server:
+
 ```bash
 npm run dev
 ```
