@@ -48,7 +48,8 @@ app.use(
 app.get('/api/auth', async (req, res) => {
   const { code } = req.query;
   const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-  let redirectUri = process.env.VITE_GOOGLE_REDIRECT_URI_API || process.env.VITE_GOOGLE_REDIRECT_URI;
+  let redirectUri =
+    process.env.VITE_GOOGLE_REDIRECT_URI_API || process.env.VITE_GOOGLE_REDIRECT_URI;
   if (!redirectUri) {
     if (process.env.VERCEL_URL) {
       redirectUri = `https://${process.env.VERCEL_URL}/api/auth`;
