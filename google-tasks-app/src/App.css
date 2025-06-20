@@ -131,11 +131,11 @@ body,
   border: none;
   cursor: pointer;
   padding: 0;
-  margin-left: 5px;
+  margin-left: 8px;
 }
 
 .hamburger-line {
-  width: 22px;
+  width: 28px;
   height: 3px;
   background: #fff;
   border-radius: 2px;
@@ -152,16 +152,17 @@ body,
   max-width: 400px;
   background: #3d3c3c; /* lighter gray */
   box-shadow: 2px 0 16px rgba(0, 0, 0, 0.18);
-  z-index: 105;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
 }
 .sidebar-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 1rem;
   border-bottom: 1px solid #9cab45;
+  position: relative;
 }
 .sidebar-content {
   flex: 1;
@@ -180,4 +181,36 @@ body,
 .sidebar-item:hover {
   background: #facc15;
   color: #222;
+}
+.sidebar-item-text {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+
+.sidebar-overlay {
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  z-index: 104;
+}
+
+.sidebar-close-btn {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  line-height: 1;
+  outline: none;
+  transition: color 0.15s;
+}
+.sidebar-close-btn:hover {
+  color: #facc15;
 }

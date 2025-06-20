@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import './App.css';
 import Sidebar from './components/Sidebar';
+import ReactDOM from 'react-dom';
 
 function App() {
   const [user, setUser] = useState<any>(null);
@@ -9,6 +10,7 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
   const isProd = window.location.hostname === 'leotest-tools.vercel.app';
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // On page load, check session from backend
@@ -133,9 +135,6 @@ function App() {
         )}
         {user && (
           <div className="space-y-4">
-            <p className="text-xl text-green-400">
-              Welcome, {user?.profile?.name || 'Authenticated User'}!
-            </p>
             {/* Placeholder for TaskList component */}
             <div className="mt-8 p-6 bg-gray-800 rounded-lg shadow-xl">
               <h2 className="text-2xl mb-4">Your Tasks (Coming Soon!)</h2>
@@ -144,7 +143,23 @@ function App() {
           </div>
         )}
       </div>
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      {/* Overlay and Sidebar for sidebarOpen using portal */}
+      {sidebarOpen &&
+        ReactDOM.createPortal(
+          <>
+            <div
+              className="fixed inset-0 bg-black bg-opacity-40 z-[104]"
+              onClick={() => setSidebarOpen(false)}
+            ></div>
+            <Sidebar
+              open={sidebarOpen}
+              onClose={() => setSidebarOpen(false)}
+              onSidebarClick={e => e.stopPropagation()}
+              userName={user?.profile?.name}
+            />
+          </>,
+          document.body
+        )}
     </div>
   );
 }

@@ -4,9 +4,11 @@ interface SidebarProps {
   open: boolean;
   onClose: () => void;
   homeUrl?: string;
+  onSidebarClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  userName?: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ open, onClose, homeUrl }) => {
+const Sidebar: React.FC<SidebarProps> = ({ open, onClose, homeUrl, onSidebarClick, userName }) => {
   if (!open) return null;
   const url =
     homeUrl ||
@@ -14,11 +16,13 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, homeUrl }) => {
       ? 'http://localhost:3000'
       : 'https://leotest-tools.vercel.app');
   return (
-    <div className="sidebar">
+    <div className="sidebar" onClick={onSidebarClick}>
       <div className="sidebar-header">
-        <span className="text-lg font-bold">Menu</span>
+        <span className="text-lg font-bold">
+          {userName ? `Welcome, ${userName}!` : 'Menu'}
+        </span>
         <button
-          className="text-white text-2xl font-bold focus:outline-none"
+          className="sidebar-close-btn"
           onClick={onClose}
           aria-label="Close sidebar"
         >
@@ -27,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, homeUrl }) => {
       </div>
       <div className="sidebar-content">
         <a className="sidebar-item" href={url} onClick={onClose}>
-          Home
+          <span className="sidebar-item-text">Home</span>
         </a>
       </div>
     </div>
