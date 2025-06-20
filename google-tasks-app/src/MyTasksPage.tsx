@@ -13,42 +13,6 @@ interface Task {
   completed?: string; // ISO date string
 }
 
-function formatDateDisplay(dateStr: string) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr);
-  const day = String(d.getDate()).padStart(2, '0');
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const year = d.getFullYear();
-  return `${day}/${month}/${year}`;
-}
-
-function formatDatePill(dateStr: string) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr);
-  const today = new Date();
-  const tomorrow = new Date(Date.now() + 86400000);
-  if (
-    d.getFullYear() === today.getFullYear() &&
-    d.getMonth() === today.getMonth() &&
-    d.getDate() === today.getDate()
-  ) {
-    return 'Today';
-  }
-  if (
-    d.getFullYear() === tomorrow.getFullYear() &&
-    d.getMonth() === tomorrow.getMonth() &&
-    d.getDate() === tomorrow.getDate()
-  ) {
-    return 'Tomorrow';
-  }
-  // Google Tasks web uses 'Sun, Jun 22' format
-  return d.toLocaleDateString(undefined, {
-    weekday: 'short',
-    month: 'short',
-    day: '2-digit',
-  });
-}
-
 function sortTasks(tasks: Task[]): Task[] {
   // Today, Tomorrow, then by due date, then no due date
   return [...tasks].sort((a, b) => {
@@ -99,14 +63,10 @@ function groupTasksByDate(tasks: Task[]) {
 
 const MyTasksPage: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [updatingTaskId, setUpdatingTaskId] = useState<string | null>(null);
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
     fetch(`${API_BASE_URL}/api/tasks/list`, { credentials: 'include' })
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch tasks');
@@ -114,11 +74,9 @@ const MyTasksPage: React.FC = () => {
       })
       .then((data) => {
         setTasks(data.tasks || []);
-        setLoading(false);
       })
       .catch((e) => {
-        setError(e.message || 'Failed to fetch tasks');
-        setLoading(false);
+        console.error(e.message || 'Failed to fetch tasks');
       });
   }, []);
 

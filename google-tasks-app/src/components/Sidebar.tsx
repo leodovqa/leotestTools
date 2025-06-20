@@ -19,11 +19,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   myTasksUrl,
 }) => {
   if (!open) return null;
-  const url =
-    homeUrl ||
-    (window.location.hostname === 'localhost'
-      ? 'http://localhost:3000'
-      : 'https://leotest-tools.vercel.app');
+  // const url =
+  //   homeUrl ||
+  //   (window.location.hostname === 'localhost'
+  //     ? 'http://localhost:3000'
+  //     : 'https://leotest-tools.vercel.app');
   return (
     <div className="sidebar" onClick={onSidebarClick}>
       <div className="sidebar-header">

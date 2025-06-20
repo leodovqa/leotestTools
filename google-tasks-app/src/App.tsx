@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import ReactDOM from 'react-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import MyTasksPage from './MyTasksPage.tsx';
 
 function TopBanner({
@@ -52,15 +52,12 @@ function App() {
   const [authStatus, setAuthStatus] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
-  const isProd = window.location.hostname === 'leotest-tools.vercel.app';
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDetails, setTaskDetails] = useState('');
   const [taskDue, setTaskDue] = useState<string | null>(null);
-  const [showDatePicker, setShowDatePicker] = useState(false);
   const today = new Date();
   const tomorrow = new Date(Date.now() + 86400000);
-  const dateInputRef = useRef<HTMLInputElement>(null);
   const [customDate, setCustomDate] = useState<Date | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -158,7 +155,7 @@ function App() {
             setUser(null);
             setAuthStatus(null);
           }}
-          isProd={isProd}
+          isProd={false}
           onOpenSidebar={() => setSidebarOpen(true)}
         />
         <Routes>
@@ -169,10 +166,10 @@ function App() {
               <div className="main-content flex flex-col items-center justify-center space-y-8">
                 {authStatus === 'success' && (
                   <p
-                    className={`text-xl font-bold ${isProd ? 'text-green-400' : 'text-yellow-400'}`}
-                    style={{ color: isProd ? '#4ade80' : '#fde047' }}
+                    className={`text-xl font-bold ${false ? 'text-green-400' : 'text-yellow-400'}`}
+                    style={{ color: false ? '#4ade80' : '#fde047' }}
                   >
-                    Login successful! You are using {isProd ? 'PROD' : 'DEV'} version.
+                    Login successful! You are using {false ? 'PROD' : 'DEV'} version.
                   </p>
                 )}
                 {authStatus === 'error' && (
