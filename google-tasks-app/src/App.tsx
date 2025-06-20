@@ -7,25 +7,25 @@ function App() {
   const [authStatus, setAuthStatus] = useState<string | null>(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const auth = params.get('auth');
-    if (auth === 'success') setAuthStatus('success');
-    else if (auth === 'error') setAuthStatus('error');
-
-    // Restore user from localStorage if available
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      const userObj = JSON.parse(storedUser);
-      setUser(userObj);
-      setAuthStatus('success'); // treat as logged in if user is present
-    }
+    // On page load, check session from backend
+    fetch('http://localhost:3001/api/session', {
+      credentials: 'include',
+    })
+      .then((res) => (res.ok ? res.json() : { user: null }))
+      .then((data) => {
+        if (data.user) {
+          setUser(data.user);
+          setAuthStatus('success');
+        } else {
+          setUser(null);
+          setAuthStatus(null);
+        }
+      })
+      .catch(() => {
+        setUser(null);
+        setAuthStatus(null);
+      });
   }, []);
-
-  useEffect(() => {
-    // Save user to localStorage
-    if (user) localStorage.setItem('user', JSON.stringify(user));
-    else localStorage.removeItem('user');
-  }, [user]);
 
   useEffect(() => {
     // Remove auth param from URL after handling
@@ -42,6 +42,31 @@ function App() {
     ux_mode: 'redirect',
     redirect_uri: 'http://localhost:3001/api/auth',
     scope: 'https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/calendar',
+    onSuccess: async (codeResponse) => {
+      // Exchange code for tokens with backend
+      try {
+        const response = await fetch('http://localhost:3001/api/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: codeResponse.code }),
+        });
+        if (!response.ok) {
+          setAuthStatus('error');
+          return;
+        }
+        const data = await response.json();
+        // Store expiry timestamp
+        const tokenData = {
+          ...data,
+          expires_at: Date.now() + (data.expires_in ? data.expires_in * 1000 : 3600 * 1000),
+        };
+        setUser(tokenData);
+        localStorage.setItem('user', JSON.stringify(tokenData));
+        setAuthStatus('success');
+      } catch (e) {
+        setAuthStatus('error');
+      }
+    },
   });
 
   return (
@@ -65,11 +90,17 @@ function App() {
         )}
         {user && (
           <div className="space-y-4">
-            <p className="text-xl text-green-400">Welcome, Authenticated User!</p>
+            <p className="text-xl text-green-400">
+              Welcome, {user?.profile?.name || "Authenticated User"}!
+            </p>
             <button
-              onClick={() => {
+              onClick={async () => {
+                await fetch('http://localhost:3001/api/logout', {
+                  method: 'POST',
+                  credentials: 'include',
+                });
                 setUser(null);
-                localStorage.removeItem('user');
+                setAuthStatus(null);
               }}
               className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300"
             >

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import dotenv from 'dotenv';
+import session from 'express-session';
 
 // Load environment variables
 dotenv.config();
@@ -19,11 +20,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set up CORS to allow requests from your Vite frontend
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  const allowedOrigin = 'http://localhost:3000';
+  const origin = req.headers.origin;
+  if (origin === allowedOrigin) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
   next();
 });
+
+// Add express-session middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'dev-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }, // set to true in production with HTTPS
+  })
+);
 
 // Route for your /api/auth endpoint
 app.get('/api/auth', async (req, res) => {
@@ -46,7 +65,7 @@ app.get('/api/auth', async (req, res) => {
   console.log('[OAuth] Debug info:');
   console.log('  Client ID:', clientId ? 'Set' : 'Undefined');
   console.log('  Client Secret:', clientSecret ? 'Set' : 'Undefined');
-  console.log('  Redirect URI:', redirectUri);
+  console.log('  Redirect URI:', redirectUri ? 'Set' : 'Undefined');
   console.log('  Code:', code);
   try {
     const params = new URLSearchParams({
@@ -56,7 +75,7 @@ app.get('/api/auth', async (req, res) => {
       redirect_uri: redirectUri,
       grant_type: 'authorization_code',
     });
-    console.log('[OAuth] Token exchange params:', params.toString());
+    console.log('[OAuth] Token exchange params:', params.toString() ? 'Set' : 'Undefined');
     const response = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: {
@@ -69,12 +88,41 @@ app.get('/api/auth', async (req, res) => {
       console.error('[OAuth] Error exchanging code:', errorData);
       return res.redirect(`${frontendUrl}?auth=error`);
     }
-    // Optionally, handle tokens here
+    const data = await response.json();
+    // Fetch user profile info from Google
+    const profileRes = await fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+      headers: {
+        Authorization: `Bearer ${data.access_token}`,
+      },
+    });
+    const profile = await profileRes.json();
+    // Store token data and profile in session
+    req.session.user = {
+      ...data,
+      profile, // contains name, email, picture, etc.
+      expires_at: Date.now() + (data.expires_in ? data.expires_in * 1000 : 3600 * 1000),
+    };
     return res.redirect(`${frontendUrl}?auth=success`);
   } catch (error) {
     console.error('[OAuth] Server error:', error);
     return res.redirect(`${frontendUrl}?auth=error`);
   }
+});
+
+// Endpoint to get current session user
+app.get('/api/session', (req, res) => {
+  if (req.session.user) {
+    res.json({ user: req.session.user });
+  } else {
+    res.status(401).json({ user: null });
+  }
+});
+
+// Endpoint to logout (destroy session)
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.json({ success: true });
+  });
 });
 
 app.listen(port, () => {
