@@ -1,14 +1,14 @@
-import NextAuth, { DefaultSession, Account, User } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import { JWT } from "next-auth/jwt";
+import NextAuth, { DefaultSession, Account, User } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+import { JWT } from 'next-auth/jwt';
 
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session extends DefaultSession {
     accessToken?: string;
   }
 }
 
-declare module "next-auth/jwt" {
+declare module 'next-auth/jwt' {
   interface JWT {
     accessToken?: string;
   }
@@ -22,7 +22,7 @@ const handler = NextAuth({
       authorization: {
         params: {
           scope:
-            "openid profile email https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/calendar",
+            'openid profile email https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/calendar',
         },
       },
     }),
@@ -49,11 +49,11 @@ const handler = NextAuth({
   },
   cookies: {
     state: {
-      name: "next-auth.state",
+      name: 'next-auth.state',
       options: {
         httpOnly: true,
-        sameSite: "lax",
-        path: "/",
+        sameSite: 'lax',
+        path: '/',
         secure: false,
       },
     },
