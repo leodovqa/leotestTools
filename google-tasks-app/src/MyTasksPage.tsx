@@ -10,6 +10,7 @@ interface Task {
   notes?: string;
   due?: string; // ISO date string
   status?: string;
+  completed?: string; // ISO date string
 }
 
 function formatDateDisplay(dateStr: string) {
@@ -101,6 +102,7 @@ const MyTasksPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [updatingTaskId, setUpdatingTaskId] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -121,7 +123,9 @@ const MyTasksPage: React.FC = () => {
   }, []);
 
   const sortedTasks = sortTasks(tasks);
-  const grouped = groupTasksByDate(sortedTasks);
+  const activeTasks = sortedTasks.filter((t) => t.status !== 'completed');
+  const completedTasks = sortedTasks.filter((t) => t.status === 'completed');
+  const grouped = groupTasksByDate(activeTasks);
   const groupOrder = [
     'Today',
     'Tomorrow',
@@ -130,6 +134,32 @@ const MyTasksPage: React.FC = () => {
       .sort(),
     'No Due Date',
   ];
+
+  function formatCompletedDate(dateStr: string) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString(undefined, {
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short',
+    });
+  }
+
+  async function handleToggleTaskStatus(task: Task) {
+    setUpdatingTaskId(task.id);
+    const newStatus = task.status === 'completed' ? 'needsAction' : 'completed';
+    await fetch(`${API_BASE_URL}/api/tasks/update-status`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ id: task.id, status: newStatus }),
+    });
+    // Refetch tasks after update
+    fetch(`${API_BASE_URL}/api/tasks/list`, { credentials: 'include' })
+      .then((res) => res.json())
+      .then((data) => setTasks(data.tasks || []))
+      .finally(() => setUpdatingTaskId(null));
+  }
 
   return (
     <div
@@ -237,42 +267,34 @@ const MyTasksPage: React.FC = () => {
                     <div
                       key={task.id}
                       style={{
-                        display: 'grid',
-                        gridTemplateColumns: '48px 1fr',
-                        alignItems: 'flex-start',
+                        display: 'flex',
+                        alignItems: 'baseline',
                         minHeight: 40,
                         marginBottom: 8,
                       }}
                     >
                       {/* Checkbox cell */}
-                      <div className="tasklist-checkbox">
+                      <div className="tasklist-checkbox" style={{ width: 48, marginRight: 0 }}>
                         <input
                           type="checkbox"
                           className="form-checkbox h-5 w-5 text-blue-400 bg-gray-800 border-gray-600 focus:ring-blue-500"
                           checked={task.status === 'completed'}
-                          readOnly
+                          disabled={updatingTaskId === task.id}
+                          onChange={() => handleToggleTaskStatus(task)}
                         />
                       </div>
                       {/* Content cell */}
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'flex-start',
-                          paddingLeft: 24,
-                          textAlign: 'left',
-                        }}
-                      >
+                      <div className="tasklist-content">
                         <div
-                          className="font-medium text-base text-white"
-                          style={{ lineHeight: 1.3, textAlign: 'left', wordBreak: 'break-word' }}
+                          className="task-title font-medium text-base text-white"
+                          style={{ wordBreak: 'break-word' }}
                         >
                           {task.title}
                         </div>
                         {task.notes && (
                           <div
-                            className="text-sm text-gray-400"
-                            style={{ lineHeight: 1.2, textAlign: 'left', wordBreak: 'break-word' }}
+                            className="task-notes text-sm text-gray-400"
+                            style={{ wordBreak: 'break-word' }}
                           >
                             {task.notes}
                           </div>
@@ -285,6 +307,123 @@ const MyTasksPage: React.FC = () => {
           )}
         </div>
       </div>
+      {/* Completed Tasks Card */}
+      {completedTasks.length > 0 && (
+        <div
+          className="addtask-card addtask-dark-card tasklist-card w-full mx-auto shadow-2xl"
+          style={{
+            maxWidth: '520px',
+            width: '100%',
+            minHeight: 100,
+            maxHeight: '80vh',
+            overflowY: 'auto',
+            borderRadius: '1.7rem',
+            boxShadow: '0 10px 36px 0 rgba(0,0,0,0.36), 0 4px 12px 0 rgba(0,0,0,0.20)',
+            padding: '2rem 2rem 1.5rem 0',
+            position: 'relative',
+            overflow: 'visible',
+            marginTop: '2.5rem',
+          }}
+        >
+          {/* Vertical divider for the whole card */}
+          <div
+            style={{
+              position: 'absolute',
+              left: 48,
+              top: 0,
+              bottom: 0,
+              width: 1,
+              background: '#232b3b',
+              zIndex: 1,
+            }}
+          />
+          <div style={{ width: '100%' }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '48px 1fr',
+                alignItems: 'center',
+                marginBottom: 8,
+                marginTop: 0,
+              }}
+            >
+              <div></div>
+              <div
+                style={{
+                  fontWeight: 700,
+                  fontSize: 18,
+                  color: '#a3e635',
+                  textAlign: 'center',
+                  width: '100%',
+                }}
+              >
+                Completed
+              </div>
+            </div>
+            {completedTasks.map((task) => (
+              <div
+                key={task.id}
+                style={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  minHeight: 40,
+                  marginBottom: 8,
+                }}
+              >
+                {/* Checkmark cell */}
+                <button
+                  className="tasklist-checkbox completed-check-btn"
+                  style={{
+                    width: 48,
+                    marginRight: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'none',
+                    border: 'none',
+                    cursor: updatingTaskId === task.id ? 'not-allowed' : 'pointer',
+                    padding: 0,
+                  }}
+                  onClick={() => handleToggleTaskStatus(task)}
+                  disabled={updatingTaskId === task.id}
+                  title="Mark as incomplete"
+                >
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="8" stroke="#60a5fa" strokeWidth="2" fill="#181b20" />
+                    <path
+                      d="M6 10.5L9 13.5L14 8.5"
+                      stroke="#60a5fa"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+                {/* Content cell */}
+                <div className="tasklist-content">
+                  <div
+                    className="task-title font-medium text-base text-white"
+                    style={{ wordBreak: 'break-word' }}
+                  >
+                    {task.title}
+                  </div>
+                  {task.notes && (
+                    <div
+                      className="task-notes text-sm text-gray-400"
+                      style={{ wordBreak: 'break-word' }}
+                    >
+                      {task.notes}
+                    </div>
+                  )}
+                  <div className="text-xs text-gray-400 mt-1" style={{ fontStyle: 'italic' }}>
+                    Completed: {formatCompletedDate(task.completed || '')}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

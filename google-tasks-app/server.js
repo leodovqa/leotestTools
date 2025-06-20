@@ -212,8 +212,55 @@ app.get('/api/tasks/list', async (req, res) => {
       notes: t.notes,
       due: t.due,
       status: t.status,
+      completed: t.completed,
     }));
     return res.status(200).json({ tasks });
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
+});
+
+// Endpoint to update a Google Task's status (complete/un-complete)
+app.post('/api/tasks/update-status', async (req, res) => {
+  const user = req.session.user;
+  if (!user || !user.access_token) {
+    return res.status(401).json({ error: 'Not authenticated' });
+  }
+  const { id, status } = req.body;
+  if (!id || !status) {
+    return res.status(400).json({ error: 'Task id and status are required' });
+  }
+  try {
+    // 1. Get the user's default tasklist
+    const listRes = await fetch('https://tasks.googleapis.com/tasks/v1/users/@me/lists', {
+      headers: { Authorization: `Bearer ${user.access_token}` },
+    });
+    if (!listRes.ok) {
+      return res.status(500).json({ error: 'Failed to fetch task lists' });
+    }
+    const lists = await listRes.json();
+    const defaultList = lists.items && lists.items[0];
+    if (!defaultList) {
+      return res.status(500).json({ error: 'No task list found' });
+    }
+    // 2. Update the task status
+    const updateRes = await fetch(
+      `https://tasks.googleapis.com/tasks/v1/lists/${defaultList.id}/tasks/${id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${user.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      }
+    );
+    if (!updateRes.ok) {
+      const err = await updateRes.json();
+      return res.status(500).json({ error: 'Failed to update task', details: err });
+    }
+    const updatedTask = await updateRes.json();
+    return res.status(200).json({ task: updatedTask });
   } catch (err) {
     return res.status(500).json({ error: 'Server error', details: err.message });
   }
