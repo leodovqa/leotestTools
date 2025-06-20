@@ -88,7 +88,6 @@ body,
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 1.75rem;
-  font-weight: 800;
   color: #7dd3fc;
   white-space: nowrap;
   user-select: none;
@@ -213,4 +212,256 @@ body,
 }
 .sidebar-close-btn:hover {
   color: #facc15;
+}
+
+/* --- Add Task Section (Google Tasks style) --- */
+.addtask-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7rem;
+}
+.addtask-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.addtask-card {
+  width: 100%;
+  max-width: 380px;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 6px 32px 0 rgba(60,60,60,0.13), 0 1.5px 6px 0 rgba(60,60,60,0.10);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.addtask-drag {
+  width: 48px;
+  height: 6px;
+  border-radius: 3px;
+  background: #e5e7eb;
+  margin: 0 auto 1.5rem auto;
+  opacity: 0.8;
+}
+.addtask-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.addtask-plus {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e0edfa;
+  color: #2196f3;
+  font-size: 1.2rem;
+}
+.addtask-input {
+  flex: 1;
+  background: #f3f4f6;
+  color: #222;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.1rem;
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+.addtask-input:focus {
+  box-shadow: 0 0 0 2px #60a5fa;
+  background: #e8f0fe;
+}
+.addtask-textarea {
+  background: #f3f4f6;
+  color: #222;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.7rem 1.1rem;
+  font-size: 1rem;
+  outline: none;
+  resize: none;
+  margin-bottom: 0.5rem;
+  transition: box-shadow 0.2s;
+}
+.addtask-textarea:focus {
+  box-shadow: 0 0 0 2px #60a5fa;
+  background: #e8f0fe;
+}
+.addtask-btn-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.addtask-btn {
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  background: #f3f4f6;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  box-shadow: 0 1px 4px 0 rgba(60,60,60,0.07);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.addtask-btn.selected, .addtask-btn:active {
+  background: #e0edfa;
+  color: #1976d2;
+}
+.addtask-btn:hover:not(.selected) {
+  background: #e5e7eb;
+}
+.addtask-date-input {
+  margin-left: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  border: none;
+  background: #f3f4f6;
+  color: #222;
+  font-size: 0.98rem;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+.addtask-date-input:focus {
+  box-shadow: 0 0 0 2px #60a5fa;
+  background: #e8f0fe;
+}
+.addtask-save {
+  width: 100%;
+  background: #458e47;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.08rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 0;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 8px 0 rgba(60,60,60,0.10);
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.addtask-save:disabled {
+  background: #b6c6e3;
+  color: #fff;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* --- Add Task Section (Dark Style) --- */
+.addtask-dark-card {
+  background: #23272f;
+  color: #f3f4f6;
+  box-shadow: 0 6px 32px 0 rgba(0,0,0,0.22), 0 1.5px 6px 0 rgba(0,0,0,0.18);
+}
+.addtask-dark-drag {
+  background: #444851;
+}
+.addtask-dark-input {
+  background: #181b20;
+  color: #f3f4f6;
+}
+.addtask-dark-input:focus {
+  background: #23272f;
+  color: #fff;
+  box-shadow: 0 0 0 2px #60a5fa;
+}
+.addtask-dark-btn {
+  background: #23272f;
+  color: #e5e7eb;
+}
+.addtask-dark-btn.selected, .addtask-dark-btn:active {
+  background: #2563eb;
+  color: #fff;
+}
+.addtask-dark-btn:hover:not(.selected) {
+  background: #181b20;
+}
+.addtask-dark-save {
+  background: #4cae4f;
+  color: #fff;
+}
+.addtask-dark-save:disabled {
+  background: #b6c6e3;
+  color: #fff;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* --- Add Task Section: DatePicker Dark Styles --- */
+.addtask-datepicker-dark {
+  background: #23272f !important;
+  color: #f3f4f6 !important;
+  border-radius: 1rem !important;
+  border: none !important;
+  box-shadow: 0 6px 32px 0 rgba(0,0,0,0.22), 0 1.5px 6px 0 rgba(0,0,0,0.18) !important;
+  padding: 0.5rem 0.7rem !important;
+}
+.addtask-datepicker-dark .react-datepicker__header {
+  background: #23272f !important;
+  border-bottom: 1px solid #374151 !important;
+}
+.addtask-datepicker-dark .react-datepicker__current-month,
+.addtask-datepicker-dark .react-datepicker__day-name,
+.addtask-datepicker-dark .react-datepicker__day {
+  color: #f3f4f6 !important;
+}
+.addtask-datepicker-dark .react-datepicker__day--selected,
+.addtask-datepicker-dark .react-datepicker__day--keyboard-selected {
+  background: #2563eb !important;
+  color: #fff !important;
+}
+.addtask-datepicker-dark .react-datepicker__day--today {
+  border-radius: 50% !important;
+  border: 1.5px solid #60a5fa !important;
+}
+.addtask-datepicker-dark .react-datepicker__day:hover {
+  background: #374151 !important;
+}
+.addtask-datepicker-dark .react-datepicker__navigation-icon::before {
+  border-color: #f3f4f6 !important;
+}
+.addtask-datepicker-dark .react-datepicker__triangle {
+  display: none !important;
+}
+.addtask-datepicker-popper {
+  z-index: 9999 !important;
+}
+
+.addtask-date-pill {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.08rem;
+  background: #b79f3f;
+  color: #222;
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 0;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 8px 0 rgba(60,60,60,0.10);
+  pointer-events: none;
+  transition: background 0.18s;
+}
+.addtask-btn.selected, .addtask-dark-btn.selected, .addtask-btn:active, .addtask-dark-btn:active {
+  background: #5365cb !important;
+  color: #fff !important;
 }

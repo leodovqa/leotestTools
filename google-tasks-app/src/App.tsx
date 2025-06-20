@@ -3,6 +3,8 @@ import { useGoogleLogin } from '@react-oauth/google';
 import './App.css';
 import Sidebar from './components/Sidebar';
 import ReactDOM from 'react-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function App() {
   const [user, setUser] = useState<any>(null);
@@ -11,6 +13,14 @@ function App() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
   const isProd = window.location.hostname === 'leotest-tools.vercel.app';
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const [taskTitle, setTaskTitle] = useState('');
+  const [taskDetails, setTaskDetails] = useState('');
+  const [taskDue, setTaskDue] = useState<string | null>(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const today = new Date();
+  const tomorrow = new Date(Date.now() + 86400000);
+  const dateInputRef = useRef<HTMLInputElement>(null);
+  const [customDate, setCustomDate] = useState<Date | null>(null);
 
   useEffect(() => {
     // On page load, check session from backend
@@ -75,6 +85,22 @@ function App() {
     },
   });
 
+  function formatDate(date: Date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  function formatDateDisplay(dateStr: string) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
   return (
     <div id="root" className="min-h-screen w-full bg-gray-900 text-white p-0">
       {/* Top Banner (fixed, always at the top) */}
@@ -134,13 +160,93 @@ function App() {
           </button>
         )}
         {user && (
-          <div className="space-y-4">
-            {/* Placeholder for TaskList component */}
-            <div className="mt-8 p-6 bg-gray-800 rounded-lg shadow-xl">
-              <h2 className="text-2xl mb-4">Your Tasks (Coming Soon!)</h2>
-              <p className="text-gray-500">Integrate Google Tasks API here.</p>
+          <section className="addtask-section">
+            <h2 className="addtask-title">Create a new task</h2>
+            <div className="addtask-card addtask-dark-card">
+              <div className="addtask-drag addtask-dark-drag"></div>
+              <div className="flex flex-col gap-3 w-full">
+                <div className="addtask-input-row">
+                  <input
+                    className="addtask-input addtask-dark-input"
+                    placeholder="Add a task"
+                    value={taskTitle}
+                    onChange={e => setTaskTitle(e.target.value)}
+                  />
+                </div>
+                <textarea
+                  className="addtask-textarea addtask-dark-input"
+                  placeholder="Details"
+                  rows={2}
+                  value={taskDetails}
+                  onChange={e => setTaskDetails(e.target.value)}
+                />
+                <div className="addtask-btn-row">
+                  <button
+                    type="button"
+                    className={`addtask-btn addtask-dark-btn${taskDue === formatDate(today) ? ' selected' : ''}`}
+                    onClick={() => {
+                      setTaskDue(formatDate(today));
+                      setCustomDate(null);
+                    }}
+                  >
+                    Today
+                  </button>
+                  <button
+                    type="button"
+                    className={`addtask-btn addtask-dark-btn${taskDue === formatDate(tomorrow) ? ' selected' : ''}`}
+                    onClick={() => {
+                      setTaskDue(formatDate(tomorrow));
+                      setCustomDate(null);
+                    }}
+                  >
+                    Tomorrow
+                  </button>
+                  <DatePicker
+                    selected={customDate}
+                    onChange={date => {
+                      setCustomDate(date as Date);
+                      setTaskDue(date ? formatDate(date as Date) : null);
+                    }}
+                    customInput={
+                      <button
+                        type="button"
+                        className={`addtask-btn addtask-dark-btn${customDate ? ' selected' : ''}`}
+                      >
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M16 3v4M8 3v4"/></svg>
+                        <span>Date</span>
+                      </button>
+                    }
+                    calendarClassName="addtask-datepicker-dark"
+                    popperPlacement="bottom"
+                    popperClassName="addtask-datepicker-popper"
+                    dateFormat="yyyy-MM-dd"
+                    minDate={today}
+                    showPopperArrow={false}
+                  />
+                </div>
+                {/* Show picked date below buttons if set */}
+                <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: 0}}>
+                  {taskDue && (
+                    <span className="addtask-date-pill">
+                      {formatDateDisplay(taskDue)}
+                    </span>
+                  )}
+                  <button
+                    className="addtask-save addtask-dark-save"
+                    disabled={!taskTitle.trim()}
+                    onClick={() => {
+                      setTaskTitle('');
+                      setTaskDetails('');
+                      setTaskDue(null);
+                      setCustomDate(null);
+                    }}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
         )}
       </div>
       {/* Overlay and Sidebar for sidebarOpen using portal */}
