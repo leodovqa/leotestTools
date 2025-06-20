@@ -7,6 +7,7 @@ function App() {
   const [authStatus, setAuthStatus] = useState<string | null>(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+  console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
 
   useEffect(() => {
     // On page load, check session from backend
