@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import './App.css';
+import Sidebar from './components/Sidebar';
 
 function App() {
   const [user, setUser] = useState<any>(null);
   const [authStatus, setAuthStatus] = useState<string | null>(null);
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
-  console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
-
   const isProd = window.location.hostname === 'leotest-tools.vercel.app';
 
   useEffect(() => {
@@ -75,13 +74,49 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white p-4">
-      <div className="text-center space-y-8">
-        <h1 className="text-5xl font-extrabold mb-4 text-blue-400">Google Tasks Manager</h1>
+    <div id="root" className="min-h-screen w-full bg-gray-900 text-white p-0">
+      {/* Top Banner (fixed, always at the top) */}
+      <div className="top-banner">
+        <div className="top-banner-left">
+          <button
+            className="hamburger-btn"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open sidebar"
+          >
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+          </button>
+        </div>
+        <span className="top-banner-title">Google Tasks Manager</span>
+        <div className="top-banner-right">
+          {user ? (
+            <button
+              onClick={async () => {
+                await fetch(`${API_BASE_URL}/api/logout`, {
+                  method: 'POST',
+                  credentials: 'include',
+                });
+                setUser(null);
+                setAuthStatus(null);
+              }}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ml-4"
+            >
+              Sign Out
+            </button>
+          ) : null}
+        </div>
+      </div>
+
+      {/* Main Content (pushed down by banner height) */}
+      <div className="main-content flex flex-col items-center justify-center space-y-8">
         <p className="text-lg text-gray-400 mb-8">Your personal task management solution.</p>
         {authStatus === 'success' && (
-          <p className={`text-xl font-bold ${isProd ? 'text-green-400' : 'text-yellow-400'}`}
-            style={{ color: isProd ? '#4ade80' : '#fde047' }}>
+          <p
+            className={`text-xl font-bold ${isProd ? 'text-green-400' : 'text-yellow-400'}`}
+            style={{ color: isProd ? '#4ade80' : '#fde047' }}
+          >
             Login successful! You are using {isProd ? 'PROD' : 'DEV'} version.
           </p>
         )}
@@ -101,19 +136,6 @@ function App() {
             <p className="text-xl text-green-400">
               Welcome, {user?.profile?.name || 'Authenticated User'}!
             </p>
-            <button
-              onClick={async () => {
-                await fetch(`${API_BASE_URL}/api/logout`, {
-                  method: 'POST',
-                  credentials: 'include',
-                });
-                setUser(null);
-                setAuthStatus(null);
-              }}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300"
-            >
-              Sign Out
-            </button>
             {/* Placeholder for TaskList component */}
             <div className="mt-8 p-6 bg-gray-800 rounded-lg shadow-xl">
               <h2 className="text-2xl mb-4">Your Tasks (Coming Soon!)</h2>
@@ -122,6 +144,7 @@ function App() {
           </div>
         )}
       </div>
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
     </div>
   );
 }
