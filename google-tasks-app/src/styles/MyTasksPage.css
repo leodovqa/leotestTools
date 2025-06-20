@@ -1,0 +1,48 @@
+/* Task List Card Styles for MyTasksPage */
+
+.tasklist-card {
+  padding-left: 0 !important;
+  align-items: stretch;
+  background: #23272f;
+  color: #f3f4f6;
+  box-shadow:
+    0 6px 32px 0 rgba(0, 0, 0, 0.22),
+    0 1.5px 6px 0 rgba(0, 0, 0, 0.18);
+}
+
+.tasklist-checkbox {
+  display: flex;
+  align-items: flex-start;   /* Align with the top of the row */
+  justify-content: center;
+  width: 48px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+}
+
+.tasklist-checkbox input[type='checkbox'] {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin: 3px 0 0 0;        /* Nudge down just a little */
+  accent-color: #60a5fa;
+  vertical-align: top;
+  appearance: none;
+  border: 2px solid #60a5fa;
+  background: #181b20;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+
+.tasklist-checkbox input[type='checkbox']:checked::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #60a5fa;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}

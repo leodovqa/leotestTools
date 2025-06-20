@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './styles/MyTasksPage.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
 
@@ -121,7 +122,14 @@ const MyTasksPage: React.FC = () => {
 
   const sortedTasks = sortTasks(tasks);
   const grouped = groupTasksByDate(sortedTasks);
-  const groupOrder = ['Today', 'Tomorrow', ...Object.keys(grouped).filter(k => k !== 'Today' && k !== 'Tomorrow' && k !== 'No Due Date').sort(), 'No Due Date'];
+  const groupOrder = [
+    'Today',
+    'Tomorrow',
+    ...Object.keys(grouped)
+      .filter((k) => k !== 'Today' && k !== 'Tomorrow' && k !== 'No Due Date')
+      .sort(),
+    'No Due Date',
+  ];
 
   return (
     <div
@@ -136,7 +144,10 @@ const MyTasksPage: React.FC = () => {
         boxSizing: 'border-box',
       }}
     >
-      <div className="w-full max-w-2xl flex flex-col items-center" style={{ marginBottom: '2.5rem' }}>
+      <div
+        className="w-full max-w-2xl flex flex-col items-center"
+        style={{ marginBottom: '2.5rem' }}
+      >
         <div className="text-2xl font-bold text-white mb-2">My Tasks</div>
         <div className="w-full flex items-center mb-6">
           <button
@@ -144,15 +155,25 @@ const MyTasksPage: React.FC = () => {
             onClick={() => navigate('/')}
             style={{ background: 'none', boxShadow: 'none', fontWeight: 500 }}
           >
-            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#232b3b] text-blue-400" style={{ fontSize: 22, fontWeight: 600, marginRight: 6 }}>
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+            <span
+              className="flex items-center justify-center w-7 h-7 rounded-full bg-[#232b3b] text-blue-400"
+              style={{ fontSize: 22, fontWeight: 600, marginRight: 6 }}
+            >
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+                <path
+                  d="M12 5v14M5 12h14"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
             </span>
             Add a task
           </button>
         </div>
       </div>
       <div
-        className="addtask-card addtask-dark-card w-full mx-auto shadow-2xl"
+        className="addtask-card addtask-dark-card tasklist-card w-full mx-auto shadow-2xl"
         style={{
           maxWidth: '520px',
           width: '100%',
@@ -167,45 +188,95 @@ const MyTasksPage: React.FC = () => {
         }}
       >
         {/* Vertical divider for the whole card */}
-        <div style={{ position: 'absolute', left: 48, top: 0, bottom: 0, width: 1, background: '#232b3b', zIndex: 1 }} />
+        <div
+          style={{
+            position: 'absolute',
+            left: 48,
+            top: 0,
+            bottom: 0,
+            width: 1,
+            background: '#232b3b',
+            zIndex: 1,
+          }}
+        />
         <div style={{ width: '100%' }}>
           {groupOrder.map(
             (group) =>
               grouped[group] && (
                 <React.Fragment key={group}>
                   {/* Section header row */}
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '48px 1fr',
-                    alignItems: 'center',
-                    marginBottom: 8,
-                    marginTop: 24,
-                  }}>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: '48px 1fr',
+                      alignItems: 'center',
+                      marginBottom: 8,
+                      marginTop: 24,
+                    }}
+                  >
                     <div></div>
-                    <div style={{
-                      fontWeight: 700,
-                      fontSize: 18,
-                      color: group === 'Today' ? '#60a5fa' : group === 'Tomorrow' ? '#a78bfa' : '#e5e7eb',
-                      textAlign: 'center',
-                      width: '100%',
-                    }}>{group}</div>
+                    <div
+                      style={{
+                        fontWeight: 700,
+                        fontSize: 18,
+                        color:
+                          group === 'Today'
+                            ? '#60a5fa'
+                            : group === 'Tomorrow'
+                              ? '#a78bfa'
+                              : '#e5e7eb',
+                        textAlign: 'center',
+                        width: '100%',
+                      }}
+                    >
+                      {group}
+                    </div>
                   </div>
                   {/* Task rows */}
                   {grouped[group].map((task) => (
-                    <div key={task.id} style={{ display: 'grid', gridTemplateColumns: '48px 1fr', alignItems: 'flex-start', minHeight: 40, marginBottom: 8 }}>
+                    <div
+                      key={task.id}
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: '48px 1fr',
+                        alignItems: 'flex-start',
+                        minHeight: 40,
+                        marginBottom: 8,
+                      }}
+                    >
                       {/* Checkbox cell */}
-                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', width: 48, marginLeft: '-12px' }}>
+                      <div className="tasklist-checkbox">
                         <input
                           type="checkbox"
-                          className="form-checkbox h-5 w-5 text-blue-400 bg-gray-800 rounded-full border-gray-600 focus:ring-blue-500"
+                          className="form-checkbox h-5 w-5 text-blue-400 bg-gray-800 border-gray-600 focus:ring-blue-500"
                           checked={task.status === 'completed'}
                           readOnly
                         />
                       </div>
                       {/* Content cell */}
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingLeft: 24, textAlign: 'left' }}>
-                        <div className="font-medium text-base text-white" style={{ lineHeight: 1.3, textAlign: 'left', wordBreak: 'break-word' }}>{task.title}</div>
-                        {task.notes && <div className="text-sm text-gray-400" style={{ lineHeight: 1.2, textAlign: 'left', wordBreak: 'break-word' }}>{task.notes}</div>}
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-start',
+                          paddingLeft: 24,
+                          textAlign: 'left',
+                        }}
+                      >
+                        <div
+                          className="font-medium text-base text-white"
+                          style={{ lineHeight: 1.3, textAlign: 'left', wordBreak: 'break-word' }}
+                        >
+                          {task.title}
+                        </div>
+                        {task.notes && (
+                          <div
+                            className="text-sm text-gray-400"
+                            style={{ lineHeight: 1.2, textAlign: 'left', wordBreak: 'break-word' }}
+                          >
+                            {task.notes}
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
