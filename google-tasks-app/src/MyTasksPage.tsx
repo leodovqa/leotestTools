@@ -121,116 +121,76 @@ const MyTasksPage: React.FC = () => {
           overflowY: 'auto',
           borderRadius: '1.7rem',
           boxShadow: '0 10px 36px 0 rgba(0,0,0,0.36), 0 4px 12px 0 rgba(0,0,0,0.20)',
-          padding: '2rem 2rem 1.5rem 2.5rem',
+          padding: '2rem 2rem 1.5rem 0',
           position: 'relative',
+          display: 'grid',
+          gridTemplateColumns: '48px 1fr',
         }}
       >
-        {loading && (
-          <div className="flex items-center justify-center min-h-[120px] text-lg text-gray-300 mb-14">
-            Loading tasks...
-          </div>
-        )}
-        {error && (
-          <div className="flex items-center justify-center min-h-[120px] text-lg text-red-400 mb-14">
-            {error}
-          </div>
-        )}
-        {!loading && !error && sortedTasks.length === 0 && (
-          <div className="flex flex-col items-center justify-center min-h-[120px] text-gray-400 mb-14">
-            <svg width="48" height="48" fill="none" viewBox="0 0 24 24" className="mb-2"><circle cx="12" cy="12" r="10" stroke="#374151" strokeWidth="2"/><path d="M8 12l2 2 4-4" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            No tasks yet. Enjoy your day!
-          </div>
-        )}
-        {!loading && !error && (
-          <div className="flex flex-col w-full" style={{ marginTop: 0 }}>
-            {sortedTasks.map((task, idx) => (
-              <React.Fragment key={task.id}>
-                <TaskRow task={task} />
-                {idx !== sortedTasks.length - 1 && (
-                  <div style={{ borderBottom: '1px solid #232b3b', margin: '0 0 0 44px' }} />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        )}
+        {/* Vertical divider for the whole card */}
+        <div style={{ position: 'absolute', left: 48, top: 0, bottom: 0, width: 1, background: '#232b3b', zIndex: 1 }} />
+        {/* Checkbox column */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 2 }}>
+          {sortedTasks.map((task, idx) => (
+            <div key={task.id} style={{ height: 48, display: 'flex', alignItems: 'center', width: '100%' }}>
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-blue-400 bg-gray-800 rounded-full border-gray-600 focus:ring-blue-500"
+                checked={task.status === 'completed'}
+                readOnly
+              />
+            </div>
+          ))}
+        </div>
+        {/* Content column */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingLeft: 24, zIndex: 2 }}>
+          {loading && (
+            <div className="flex items-center justify-center min-h-[120px] text-lg text-gray-300 mb-14">
+              Loading tasks...
+            </div>
+          )}
+          {error && (
+            <div className="flex items-center justify-center min-h-[120px] text-lg text-red-400 mb-14">
+              {error}
+            </div>
+          )}
+          {!loading && !error && sortedTasks.length === 0 && (
+            <div className="flex flex-col items-center justify-center min-h-[120px] text-gray-400 mb-14">
+              <svg width="48" height="48" fill="none" viewBox="0 0 24 24" className="mb-2"><circle cx="12" cy="12" r="10" stroke="#374151" strokeWidth="2"/><path d="M8 12l2 2 4-4" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              No tasks yet. Enjoy your day!
+            </div>
+          )}
+          {!loading && !error && (
+            <div className="flex flex-col w-full" style={{ marginTop: 0 }}>
+              {sortedTasks.map((task, idx) => (
+                <div key={task.id} style={{ minHeight: 48, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginBottom: 4 }}>
+                  <div className="font-medium text-base text-white" style={{ lineHeight: 1.3, textAlign: 'left', wordBreak: 'break-word' }}>{task.title}</div>
+                  {task.notes && <div className="text-sm text-gray-400" style={{ lineHeight: 1.2, textAlign: 'left', wordBreak: 'break-word' }}>{task.notes}</div>}
+                  {task.due && (
+                    <span
+                      className="mt-1 px-3 py-1 rounded-full text-xs font-semibold border"
+                      style={{
+                        borderColor: formatDatePill(task.due) === 'Today' ? '#60a5fa' : formatDatePill(task.due) === 'Tomorrow' ? '#a78bfa' : '#374151',
+                        background: formatDatePill(task.due) === 'Today' ? 'rgba(96,165,250,0.08)' : formatDatePill(task.due) === 'Tomorrow' ? 'rgba(167,139,250,0.08)' : 'rgba(55,65,81,0.12)',
+                        color: formatDatePill(task.due) === 'Today' ? '#60a5fa' : formatDatePill(task.due) === 'Tomorrow' ? '#a78bfa' : '#e5e7eb',
+                        fontWeight: 500,
+                        minWidth: 80,
+                        textAlign: 'center',
+                        marginTop: 2,
+                        display: 'inline-block',
+                      }}
+                    >
+                      {formatDatePill(task.due)}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 };
-
-function TaskRow({ task }: { task: Task }) {
-  const datePill = task.due ? formatDatePill(task.due) : null;
-  return (
-    <div
-      className="task-row"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '40px 1fr',
-        alignItems: 'start',
-        minHeight: 48,
-        width: '100%',
-        padding: '8px 0',
-      }}
-    >
-      {/* Checkbox + divider */}
-      <div style={{ position: 'relative', height: '100%' }}>
-        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-          <input
-            type="checkbox"
-            className="form-checkbox h-5 w-5 text-blue-400 bg-gray-800 rounded-full border-gray-600 focus:ring-blue-500"
-            checked={task.status === 'completed'}
-            readOnly
-          />
-        </div>
-        {/* Vertical divider */}
-        <div
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: 1,
-            background: '#232b3b',
-            borderRadius: 1,
-            marginLeft: 12,
-          }}
-        />
-      </div>
-      {/* Content */}
-      <div style={{ paddingLeft: 18, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-        <div
-          className="font-medium text-base text-white"
-          style={{ lineHeight: 1.3, textAlign: 'left', wordBreak: 'break-word' }}
-        >
-          {task.title}
-        </div>
-        {task.notes && (
-          <div
-            className="text-sm text-gray-400"
-            style={{ lineHeight: 1.2, textAlign: 'left', wordBreak: 'break-word' }}
-          >
-            {task.notes}
-          </div>
-        )}
-        {datePill && (
-          <span
-            className="mt-1 px-3 py-1 rounded-full text-xs font-semibold border"
-            style={{
-              borderColor: datePill === 'Today' ? '#60a5fa' : datePill === 'Tomorrow' ? '#a78bfa' : '#374151',
-              background: datePill === 'Today' ? 'rgba(96,165,250,0.08)' : datePill === 'Tomorrow' ? 'rgba(167,139,250,0.08)' : 'rgba(55,65,81,0.12)',
-              color: datePill === 'Today' ? '#60a5fa' : datePill === 'Tomorrow' ? '#a78bfa' : '#e5e7eb',
-              fontWeight: 500,
-              minWidth: 80,
-              textAlign: 'center',
-              marginTop: 2,
-            }}
-          >
-            {datePill}
-          </span>
-        )}
-      </div>
-    </div>
-  );
-}
 
 export default MyTasksPage;
