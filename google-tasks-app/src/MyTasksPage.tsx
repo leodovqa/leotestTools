@@ -57,6 +57,44 @@ function sortTasks(tasks: Task[]): Task[] {
   });
 }
 
+function groupTasksByDate(tasks: Task[]) {
+  const today = new Date();
+  const tomorrow = new Date(Date.now() + 86400000);
+  const groups: { [key: string]: Task[] } = {};
+  tasks.forEach((task) => {
+    if (!task.due) {
+      if (!groups['No Due Date']) groups['No Due Date'] = [];
+      groups['No Due Date'].push(task);
+    } else {
+      const d = new Date(task.due);
+      if (
+        d.getFullYear() === today.getFullYear() &&
+        d.getMonth() === today.getMonth() &&
+        d.getDate() === today.getDate()
+      ) {
+        if (!groups['Today']) groups['Today'] = [];
+        groups['Today'].push(task);
+      } else if (
+        d.getFullYear() === tomorrow.getFullYear() &&
+        d.getMonth() === tomorrow.getMonth() &&
+        d.getDate() === tomorrow.getDate()
+      ) {
+        if (!groups['Tomorrow']) groups['Tomorrow'] = [];
+        groups['Tomorrow'].push(task);
+      } else {
+        const label = d.toLocaleDateString(undefined, {
+          weekday: 'short',
+          month: 'short',
+          day: '2-digit',
+        });
+        if (!groups[label]) groups[label] = [];
+        groups[label].push(task);
+      }
+    }
+  });
+  return groups;
+}
+
 const MyTasksPage: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
@@ -82,6 +120,8 @@ const MyTasksPage: React.FC = () => {
   }, []);
 
   const sortedTasks = sortTasks(tasks);
+  const grouped = groupTasksByDate(sortedTasks);
+  const groupOrder = ['Today', 'Tomorrow', ...Object.keys(grouped).filter(k => k !== 'Today' && k !== 'Tomorrow' && k !== 'No Due Date').sort(), 'No Due Date'];
 
   return (
     <div
@@ -123,69 +163,54 @@ const MyTasksPage: React.FC = () => {
           boxShadow: '0 10px 36px 0 rgba(0,0,0,0.36), 0 4px 12px 0 rgba(0,0,0,0.20)',
           padding: '2rem 2rem 1.5rem 0',
           position: 'relative',
-          display: 'grid',
-          gridTemplateColumns: '48px 1fr',
+          overflow: 'visible',
         }}
       >
         {/* Vertical divider for the whole card */}
         <div style={{ position: 'absolute', left: 48, top: 0, bottom: 0, width: 1, background: '#232b3b', zIndex: 1 }} />
-        {/* Checkbox column */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 2 }}>
-          {sortedTasks.map((task, idx) => (
-            <div key={task.id} style={{ height: 48, display: 'flex', alignItems: 'center', width: '100%' }}>
-              <input
-                type="checkbox"
-                className="form-checkbox h-5 w-5 text-blue-400 bg-gray-800 rounded-full border-gray-600 focus:ring-blue-500"
-                checked={task.status === 'completed'}
-                readOnly
-              />
-            </div>
-          ))}
-        </div>
-        {/* Content column */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingLeft: 24, zIndex: 2 }}>
-          {loading && (
-            <div className="flex items-center justify-center min-h-[120px] text-lg text-gray-300 mb-14">
-              Loading tasks...
-            </div>
-          )}
-          {error && (
-            <div className="flex items-center justify-center min-h-[120px] text-lg text-red-400 mb-14">
-              {error}
-            </div>
-          )}
-          {!loading && !error && sortedTasks.length === 0 && (
-            <div className="flex flex-col items-center justify-center min-h-[120px] text-gray-400 mb-14">
-              <svg width="48" height="48" fill="none" viewBox="0 0 24 24" className="mb-2"><circle cx="12" cy="12" r="10" stroke="#374151" strokeWidth="2"/><path d="M8 12l2 2 4-4" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              No tasks yet. Enjoy your day!
-            </div>
-          )}
-          {!loading && !error && (
-            <div className="flex flex-col w-full" style={{ marginTop: 0 }}>
-              {sortedTasks.map((task, idx) => (
-                <div key={task.id} style={{ minHeight: 48, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginBottom: 4 }}>
-                  <div className="font-medium text-base text-white" style={{ lineHeight: 1.3, textAlign: 'left', wordBreak: 'break-word' }}>{task.title}</div>
-                  {task.notes && <div className="text-sm text-gray-400" style={{ lineHeight: 1.2, textAlign: 'left', wordBreak: 'break-word' }}>{task.notes}</div>}
-                  {task.due && (
-                    <span
-                      className="mt-1 px-3 py-1 rounded-full text-xs font-semibold border"
-                      style={{
-                        borderColor: formatDatePill(task.due) === 'Today' ? '#60a5fa' : formatDatePill(task.due) === 'Tomorrow' ? '#a78bfa' : '#374151',
-                        background: formatDatePill(task.due) === 'Today' ? 'rgba(96,165,250,0.08)' : formatDatePill(task.due) === 'Tomorrow' ? 'rgba(167,139,250,0.08)' : 'rgba(55,65,81,0.12)',
-                        color: formatDatePill(task.due) === 'Today' ? '#60a5fa' : formatDatePill(task.due) === 'Tomorrow' ? '#a78bfa' : '#e5e7eb',
-                        fontWeight: 500,
-                        minWidth: 80,
-                        textAlign: 'center',
-                        marginTop: 2,
-                        display: 'inline-block',
-                      }}
-                    >
-                      {formatDatePill(task.due)}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
+        <div style={{ width: '100%' }}>
+          {groupOrder.map(
+            (group) =>
+              grouped[group] && (
+                <React.Fragment key={group}>
+                  {/* Section header row */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '48px 1fr',
+                    alignItems: 'center',
+                    marginBottom: 8,
+                    marginTop: 24,
+                  }}>
+                    <div></div>
+                    <div style={{
+                      fontWeight: 700,
+                      fontSize: 18,
+                      color: group === 'Today' ? '#60a5fa' : group === 'Tomorrow' ? '#a78bfa' : '#e5e7eb',
+                      textAlign: 'center',
+                      width: '100%',
+                    }}>{group}</div>
+                  </div>
+                  {/* Task rows */}
+                  {grouped[group].map((task) => (
+                    <div key={task.id} style={{ display: 'grid', gridTemplateColumns: '48px 1fr', alignItems: 'flex-start', minHeight: 40, marginBottom: 8 }}>
+                      {/* Checkbox cell */}
+                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', width: 48, marginLeft: '-12px' }}>
+                        <input
+                          type="checkbox"
+                          className="form-checkbox h-5 w-5 text-blue-400 bg-gray-800 rounded-full border-gray-600 focus:ring-blue-500"
+                          checked={task.status === 'completed'}
+                          readOnly
+                        />
+                      </div>
+                      {/* Content cell */}
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingLeft: 24, textAlign: 'left' }}>
+                        <div className="font-medium text-base text-white" style={{ lineHeight: 1.3, textAlign: 'left', wordBreak: 'break-word' }}>{task.title}</div>
+                        {task.notes && <div className="text-sm text-gray-400" style={{ lineHeight: 1.2, textAlign: 'left', wordBreak: 'break-word' }}>{task.notes}</div>}
+                      </div>
+                    </div>
+                  ))}
+                </React.Fragment>
+              )
           )}
         </div>
       </div>
