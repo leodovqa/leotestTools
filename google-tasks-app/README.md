@@ -1,86 +1,54 @@
-# Google Tasks Manager
+# React + TypeScript + Vite
 
-A web application that integrates with Google Tasks API and syncs with Google Calendar. Built with Next.js, TypeScript, and Tailwind CSS.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- Google OAuth authentication
-- View and manage tasks
-- Sync with Google Calendar
-- Responsive design
-- Real-time updates
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Prerequisites
+## Expanding the ESLint configuration
 
-- Node.js 18.x or later
-- npm or yarn
-- Google Cloud Platform account
-- Google Tasks API enabled
-- Google Calendar API enabled
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Setup
-
-1. Clone the repository:
-
-```bash
-git clone <repository-url>
-cd google-tasks-app
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
 
-2. Install dependencies:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```bash
-npm install
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+})
 ```
-
-3. Create a Google Cloud Project and enable the necessary APIs:
-
-   - Go to the [Google Cloud Console](https://console.cloud.google.com)
-   - Create a new project
-   - Enable the Google Tasks API and Google Calendar API
-   - Create OAuth 2.0 credentials
-   - Add authorized redirect URIs (e.g., http://localhost:3000/api/auth/callback/google)
-
-4. Create a `.env.local` file in the root directory with the following variables:
-
-```
-GOOGLE_CLIENT_ID=your_client_id_here
-GOOGLE_CLIENT_SECRET=your_client_secret_here
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_nextauth_secret_here
-```
-
-5. Run the development server:
-
-```bash
-npm run dev
-```
-
-## Development
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run type-check` - Run TypeScript type checking
-
-## Technologies Used
-
-- Next.js 14
-- TypeScript
-- Tailwind CSS
-- NextAuth.js
-- Google Tasks API
-- Google Calendar API
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

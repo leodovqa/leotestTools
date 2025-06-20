@@ -1,8 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
-REM Change to the project directory (where the script is located)
-cd /d "%~dp0.."
+REM Change to the project root directory
+cd /d "%~dp0..\"
 
 echo Starting development environment...
 
@@ -20,9 +20,19 @@ echo.
 echo Starting local development...
 echo.
 
-REM Start the browser in a separate process
-start http://localhost:3000
+echo Starting local API server (server.js) on port 3001...
+start /B cmd /C "node server.js"
+REM Give the API server a moment to start up
+timeout /t 2 /nobreak > NUL
 
+echo Starting Vite dev server...
+echo (A browser window will open automatically if configured in Vite)
+
+REM Run Vite dev server in the same terminal
 npm run dev
 
-pause 
+REM When npm run dev is stopped, kill the API server
+for /f "tokens=2" %%a in ('tasklist ^| findstr /i "node.exe"') do taskkill /PID %%a /F > NUL 2>&1
+
+echo Both servers stopped. Press any key to exit.
+pause > nul 
