@@ -191,7 +191,7 @@ body,
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 104;
 }
 
@@ -235,7 +235,9 @@ body,
   max-width: 380px;
   background: #fff;
   border-radius: 1.25rem;
-  box-shadow: 0 6px 32px 0 rgba(60,60,60,0.13), 0 1.5px 6px 0 rgba(60,60,60,0.10);
+  box-shadow:
+    0 6px 32px 0 rgba(60, 60, 60, 0.13),
+    0 1.5px 6px 0 rgba(60, 60, 60, 0.1);
   padding: 2rem 1.5rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -315,13 +317,16 @@ body,
   background: #f3f4f6;
   color: #222;
   cursor: pointer;
-  transition: background 0.18s, color 0.18s;
-  box-shadow: 0 1px 4px 0 rgba(60,60,60,0.07);
+  transition:
+    background 0.18s,
+    color 0.18s;
+  box-shadow: 0 1px 4px 0 rgba(60, 60, 60, 0.07);
   display: flex;
   align-items: center;
   gap: 0.3rem;
 }
-.addtask-btn.selected, .addtask-btn:active {
+.addtask-btn.selected,
+.addtask-btn:active {
   background: #e0edfa;
   color: #1976d2;
 }
@@ -353,7 +358,7 @@ body,
   border-radius: 999px;
   padding: 0.8rem 0;
   margin-top: 0.5rem;
-  box-shadow: 0 2px 8px 0 rgba(60,60,60,0.10);
+  box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.1);
   cursor: pointer;
   transition: background 0.18s;
 }
@@ -368,7 +373,9 @@ body,
 .addtask-dark-card {
   background: #23272f;
   color: #f3f4f6;
-  box-shadow: 0 6px 32px 0 rgba(0,0,0,0.22), 0 1.5px 6px 0 rgba(0,0,0,0.18);
+  box-shadow:
+    0 6px 32px 0 rgba(0, 0, 0, 0.22),
+    0 1.5px 6px 0 rgba(0, 0, 0, 0.18);
 }
 .addtask-dark-drag {
   background: #444851;
@@ -386,7 +393,8 @@ body,
   background: #23272f;
   color: #e5e7eb;
 }
-.addtask-dark-btn.selected, .addtask-dark-btn:active {
+.addtask-dark-btn.selected,
+.addtask-dark-btn:active {
   background: #2563eb;
   color: #fff;
 }
@@ -410,7 +418,9 @@ body,
   color: #f3f4f6 !important;
   border-radius: 1rem !important;
   border: none !important;
-  box-shadow: 0 6px 32px 0 rgba(0,0,0,0.22), 0 1.5px 6px 0 rgba(0,0,0,0.18) !important;
+  box-shadow:
+    0 6px 32px 0 rgba(0, 0, 0, 0.22),
+    0 1.5px 6px 0 rgba(0, 0, 0, 0.18) !important;
   padding: 0.5rem 0.7rem !important;
 }
 .addtask-datepicker-dark .react-datepicker__header {
@@ -457,11 +467,14 @@ body,
   border-radius: 999px;
   padding: 0.8rem 0;
   margin-bottom: 0.5rem;
-  box-shadow: 0 2px 8px 0 rgba(60,60,60,0.10);
+  box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.1);
   pointer-events: none;
   transition: background 0.18s;
 }
-.addtask-btn.selected, .addtask-dark-btn.selected, .addtask-btn:active, .addtask-dark-btn:active {
+.addtask-btn.selected,
+.addtask-dark-btn.selected,
+.addtask-btn:active,
+.addtask-dark-btn:active {
   background: #5365cb !important;
   color: #fff !important;
 }

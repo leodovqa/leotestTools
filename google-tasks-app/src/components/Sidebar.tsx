@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface SidebarProps {
   open: boolean;
@@ -6,9 +7,17 @@ interface SidebarProps {
   homeUrl?: string;
   onSidebarClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   userName?: string;
+  myTasksUrl?: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ open, onClose, homeUrl, onSidebarClick, userName }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  open,
+  onClose,
+  homeUrl,
+  onSidebarClick,
+  userName,
+  myTasksUrl,
+}) => {
   if (!open) return null;
   const url =
     homeUrl ||
@@ -18,21 +27,18 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, homeUrl, onSidebarClic
   return (
     <div className="sidebar" onClick={onSidebarClick}>
       <div className="sidebar-header">
-        <span className="text-lg font-bold">
-          {userName ? `Welcome, ${userName}!` : 'Menu'}
-        </span>
-        <button
-          className="sidebar-close-btn"
-          onClick={onClose}
-          aria-label="Close sidebar"
-        >
+        <span className="text-lg font-bold">{userName ? `Welcome, ${userName}!` : 'Menu'}</span>
+        <button className="sidebar-close-btn" onClick={onClose} aria-label="Close sidebar">
           &times;
         </button>
       </div>
       <div className="sidebar-content">
-        <a className="sidebar-item" href={url} onClick={onClose}>
+        <Link className="sidebar-item" to={homeUrl || '/'} onClick={onClose}>
           <span className="sidebar-item-text">Home</span>
-        </a>
+        </Link>
+        <Link className="sidebar-item" to={myTasksUrl || '/tasks'} onClick={onClose}>
+          <span className="sidebar-item-text">My Tasks</span>
+        </Link>
       </div>
     </div>
   );

@@ -5,6 +5,47 @@ import Sidebar from './components/Sidebar';
 import ReactDOM from 'react-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import MyTasksPage from './MyTasksPage.tsx';
+
+function TopBanner({
+  user,
+  onSignOut,
+  isProd,
+  onOpenSidebar,
+}: {
+  user: any;
+  onSignOut: () => void;
+  isProd: boolean;
+  onOpenSidebar: () => void;
+}) {
+  const { pathname } = useLocation();
+  return (
+    <div className="top-banner">
+      <div className="top-banner-left">
+        <button className="hamburger-btn" onClick={onOpenSidebar} aria-label="Open sidebar">
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+        </button>
+      </div>
+      <span className="top-banner-title">
+        {pathname === '/tasks' ? 'My Google Tasks' : 'Google Tasks Manager'}
+      </span>
+      <div className="top-banner-right">
+        {user ? (
+          <button
+            onClick={onSignOut}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ml-4"
+          >
+            Sign Out
+          </button>
+        ) : null}
+      </div>
+    </div>
+  );
+}
 
 function App() {
   const [user, setUser] = useState<any>(null);
@@ -21,6 +62,9 @@ function App() {
   const tomorrow = new Date(Date.now() + 86400000);
   const dateInputRef = useRef<HTMLInputElement>(null);
   const [customDate, setCustomDate] = useState<Date | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     // On page load, check session from backend
@@ -102,171 +146,216 @@ function App() {
   }
 
   return (
-    <div id="root" className="min-h-screen w-full bg-gray-900 text-white p-0">
-      {/* Top Banner (fixed, always at the top) */}
-      <div className="top-banner">
-        <div className="top-banner-left">
-          <button
-            className="hamburger-btn"
-            onClick={() => setSidebarOpen(true)}
-            aria-label="Open sidebar"
-          >
-            <span className="hamburger-line"></span>
-            <span className="hamburger-line"></span>
-            <span className="hamburger-line"></span>
-            <span className="hamburger-line"></span>
-          </button>
-        </div>
-        <span className="top-banner-title">Google Tasks Manager</span>
-        <div className="top-banner-right">
-          {user ? (
-            <button
-              onClick={async () => {
-                await fetch(`${API_BASE_URL}/api/logout`, {
-                  method: 'POST',
-                  credentials: 'include',
-                });
-                setUser(null);
-                setAuthStatus(null);
-              }}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ml-4"
-            >
-              Sign Out
-            </button>
-          ) : null}
-        </div>
-      </div>
-
-      {/* Main Content (pushed down by banner height) */}
-      <div className="main-content flex flex-col items-center justify-center space-y-8">
-        <p className="text-lg text-gray-400 mb-8">Your personal task management solution.</p>
-        {authStatus === 'success' && (
-          <p
-            className={`text-xl font-bold ${isProd ? 'text-green-400' : 'text-yellow-400'}`}
-            style={{ color: isProd ? '#4ade80' : '#fde047' }}
-          >
-            Login successful! You are using {isProd ? 'PROD' : 'DEV'} version.
-          </p>
-        )}
-        {authStatus === 'error' && (
-          <p className="text-xl text-red-400">Login failed. Please try again.</p>
-        )}
-        {!user && !authStatus && (
-          <button
-            onClick={() => login()}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300"
-          >
-            Sign in with Google
-          </button>
-        )}
-        {user && (
-          <section className="addtask-section">
-            <h2 className="addtask-title">Create a new task</h2>
-            <div className="addtask-card addtask-dark-card">
-              <div className="addtask-drag addtask-dark-drag"></div>
-              <div className="flex flex-col gap-3 w-full">
-                <div className="addtask-input-row">
-                  <input
-                    className="addtask-input addtask-dark-input"
-                    placeholder="Add a task"
-                    value={taskTitle}
-                    onChange={e => setTaskTitle(e.target.value)}
-                  />
-                </div>
-                <textarea
-                  className="addtask-textarea addtask-dark-input"
-                  placeholder="Details"
-                  rows={2}
-                  value={taskDetails}
-                  onChange={e => setTaskDetails(e.target.value)}
-                />
-                <div className="addtask-btn-row">
-                  <button
-                    type="button"
-                    className={`addtask-btn addtask-dark-btn${taskDue === formatDate(today) ? ' selected' : ''}`}
-                    onClick={() => {
-                      setTaskDue(formatDate(today));
-                      setCustomDate(null);
-                    }}
+    <Router>
+      <div id="root" className="min-h-screen w-full bg-gray-900 text-white p-0">
+        <TopBanner
+          user={user}
+          onSignOut={async () => {
+            await fetch(`${API_BASE_URL}/api/logout`, {
+              method: 'POST',
+              credentials: 'include',
+            });
+            setUser(null);
+            setAuthStatus(null);
+          }}
+          isProd={isProd}
+          onOpenSidebar={() => setSidebarOpen(true)}
+        />
+        <Routes>
+          <Route path="/tasks" element={<MyTasksPage />} />
+          <Route
+            path="/"
+            element={
+              <div className="main-content flex flex-col items-center justify-center space-y-8">
+                {authStatus === 'success' && (
+                  <p
+                    className={`text-xl font-bold ${isProd ? 'text-green-400' : 'text-yellow-400'}`}
+                    style={{ color: isProd ? '#4ade80' : '#fde047' }}
                   >
-                    Today
-                  </button>
+                    Login successful! You are using {isProd ? 'PROD' : 'DEV'} version.
+                  </p>
+                )}
+                {authStatus === 'error' && (
+                  <p className="text-xl text-red-400">Login failed. Please try again.</p>
+                )}
+                {!user && !authStatus && (
                   <button
-                    type="button"
-                    className={`addtask-btn addtask-dark-btn${taskDue === formatDate(tomorrow) ? ' selected' : ''}`}
-                    onClick={() => {
-                      setTaskDue(formatDate(tomorrow));
-                      setCustomDate(null);
-                    }}
+                    onClick={() => login()}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300"
                   >
-                    Tomorrow
+                    Sign in with Google
                   </button>
-                  <DatePicker
-                    selected={customDate}
-                    onChange={date => {
-                      setCustomDate(date as Date);
-                      setTaskDue(date ? formatDate(date as Date) : null);
-                    }}
-                    customInput={
-                      <button
-                        type="button"
-                        className={`addtask-btn addtask-dark-btn${customDate ? ' selected' : ''}`}
-                      >
-                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M16 3v4M8 3v4"/></svg>
-                        <span>Date</span>
-                      </button>
-                    }
-                    calendarClassName="addtask-datepicker-dark"
-                    popperPlacement="bottom"
-                    popperClassName="addtask-datepicker-popper"
-                    dateFormat="yyyy-MM-dd"
-                    minDate={today}
-                    showPopperArrow={false}
-                  />
-                </div>
-                {/* Show picked date below buttons if set */}
-                <div style={{width: '100%', display: 'flex', flexDirection: 'column', gap: 0}}>
-                  {taskDue && (
-                    <span className="addtask-date-pill">
-                      {formatDateDisplay(taskDue)}
-                    </span>
-                  )}
-                  <button
-                    className="addtask-save addtask-dark-save"
-                    disabled={!taskTitle.trim()}
-                    onClick={() => {
-                      setTaskTitle('');
-                      setTaskDetails('');
-                      setTaskDue(null);
-                      setCustomDate(null);
-                    }}
-                  >
-                    Save
-                  </button>
-                </div>
+                )}
+                {user && (
+                  <section className="addtask-section">
+                    <h2 className="addtask-title">Create a new task</h2>
+                    <div className="addtask-card addtask-dark-card">
+                      <div className="addtask-drag addtask-dark-drag"></div>
+                      <div className="flex flex-col gap-3 w-full">
+                        <div className="addtask-input-row">
+                          <input
+                            className="addtask-input addtask-dark-input"
+                            placeholder="Add a task"
+                            value={taskTitle}
+                            onChange={(e) => setTaskTitle(e.target.value)}
+                          />
+                        </div>
+                        <textarea
+                          className="addtask-textarea addtask-dark-input"
+                          placeholder="Details"
+                          rows={2}
+                          value={taskDetails}
+                          onChange={(e) => setTaskDetails(e.target.value)}
+                        />
+                        <div className="addtask-btn-row">
+                          <button
+                            type="button"
+                            className={`addtask-btn addtask-dark-btn${taskDue === formatDate(today) ? ' selected' : ''}`}
+                            onClick={() => {
+                              setTaskDue(formatDate(today));
+                              setCustomDate(null);
+                            }}
+                          >
+                            Today
+                          </button>
+                          <button
+                            type="button"
+                            className={`addtask-btn addtask-dark-btn${taskDue === formatDate(tomorrow) ? ' selected' : ''}`}
+                            onClick={() => {
+                              setTaskDue(formatDate(tomorrow));
+                              setCustomDate(null);
+                            }}
+                          >
+                            Tomorrow
+                          </button>
+                          <DatePicker
+                            selected={customDate}
+                            onChange={(date) => {
+                              setCustomDate(date as Date);
+                              setTaskDue(date ? formatDate(date as Date) : null);
+                            }}
+                            customInput={
+                              <button
+                                type="button"
+                                className={`addtask-btn addtask-dark-btn${customDate ? ' selected' : ''}`}
+                              >
+                                <svg width="15" height="15" fill="none" viewBox="0 0 24 24">
+                                  <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="16"
+                                    rx="2"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                  />
+                                  <path
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    d="M16 3v4M8 3v4"
+                                  />
+                                </svg>
+                                <span>Date</span>
+                              </button>
+                            }
+                            calendarClassName="addtask-datepicker-dark"
+                            popperPlacement="bottom"
+                            popperClassName="addtask-datepicker-popper"
+                            dateFormat="yyyy-MM-dd"
+                            minDate={today}
+                            showPopperArrow={false}
+                          />
+                        </div>
+                        {/* Show picked date below buttons if set */}
+                        <div
+                          style={{
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 0,
+                          }}
+                        >
+                          {taskDue && (
+                            <span className="addtask-date-pill">{formatDateDisplay(taskDue)}</span>
+                          )}
+                          <button
+                            className="addtask-save addtask-dark-save"
+                            disabled={!taskTitle.trim() || saving}
+                            onClick={async () => {
+                              setSaving(true);
+                              setSaveError(null);
+                              setSaveSuccess(false);
+                              try {
+                                const res = await fetch(`${API_BASE_URL}/api/tasks/create`, {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  credentials: 'include',
+                                  body: JSON.stringify({
+                                    title: taskTitle,
+                                    notes: taskDetails,
+                                    due: taskDue || undefined,
+                                  }),
+                                });
+                                if (!res.ok) {
+                                  const err = await res.json();
+                                  setSaveError(err.error || 'Failed to create task');
+                                } else {
+                                  setSaveSuccess(true);
+                                  setTaskTitle('');
+                                  setTaskDetails('');
+                                  setTaskDue(null);
+                                  setCustomDate(null);
+                                }
+                              } catch (e: any) {
+                                setSaveError(e.message || 'Failed to create task');
+                              } finally {
+                                setSaving(false);
+                              }
+                            }}
+                          >
+                            {saving ? 'Saving...' : 'Save'}
+                          </button>
+                          {saveSuccess && (
+                            <div style={{ color: '#4cae4f', textAlign: 'center', marginTop: 8 }}>
+                              Task created!
+                            </div>
+                          )}
+                          {saveError && (
+                            <div style={{ color: '#e53e3e', textAlign: 'center', marginTop: 8 }}>
+                              {saveError}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                )}
               </div>
-            </div>
-          </section>
-        )}
+            }
+          />
+        </Routes>
+        {/* Overlay and Sidebar for sidebarOpen using portal */}
+        {sidebarOpen &&
+          ReactDOM.createPortal(
+            <>
+              <div
+                className="fixed inset-0 bg-black bg-opacity-40 z-[104]"
+                onClick={() => setSidebarOpen(false)}
+              ></div>
+              <Sidebar
+                open={sidebarOpen}
+                onClose={() => setSidebarOpen(false)}
+                onSidebarClick={(e) => e.stopPropagation()}
+                userName={user?.profile?.name}
+                homeUrl={'/'}
+                myTasksUrl={'/tasks'}
+              />
+            </>,
+            document.body
+          )}
       </div>
-      {/* Overlay and Sidebar for sidebarOpen using portal */}
-      {sidebarOpen &&
-        ReactDOM.createPortal(
-          <>
-            <div
-              className="fixed inset-0 bg-black bg-opacity-40 z-[104]"
-              onClick={() => setSidebarOpen(false)}
-            ></div>
-            <Sidebar
-              open={sidebarOpen}
-              onClose={() => setSidebarOpen(false)}
-              onSidebarClick={e => e.stopPropagation()}
-              userName={user?.profile?.name}
-            />
-          </>,
-          document.body
-        )}
-    </div>
+    </Router>
   );
 }
 
