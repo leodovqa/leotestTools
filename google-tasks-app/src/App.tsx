@@ -163,9 +163,16 @@ function App() {
                 {authStatus === 'success' && (
                   <p
                     className={`text-xl font-bold ${window.location.hostname === 'leotest-tools.vercel.app' ? 'text-green-400' : 'text-yellow-400'}`}
-                    style={{ color: window.location.hostname === 'leotest-tools.vercel.app' ? '#4ade80' : '#fde047' }}
+                    style={{
+                      color:
+                        window.location.hostname === 'leotest-tools.vercel.app'
+                          ? '#4ade80'
+                          : '#fde047',
+                    }}
                   >
-                    Login successful! You are using {window.location.hostname === 'leotest-tools.vercel.app' ? 'PROD' : 'DEV'} version.
+                    Login successful! You are using{' '}
+                    {window.location.hostname === 'leotest-tools.vercel.app' ? 'PROD' : 'DEV'}{' '}
+                    version.
                   </p>
                 )}
                 {authStatus === 'error' && (
