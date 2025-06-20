@@ -38,14 +38,16 @@ app.get('/api/auth', async (req, res) => {
     }
   }
   if (!code) {
+    console.error('[OAuth] No code in query params');
     return res.redirect(`${frontendUrl}?auth=error`);
   }
   const clientId = process.env.VITE_GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  console.log('Server-side OAuth debug:');
+  console.log('[OAuth] Debug info:');
   console.log('  Client ID:', clientId ? 'Set' : 'Undefined');
   console.log('  Client Secret:', clientSecret ? 'Set' : 'Undefined');
   console.log('  Redirect URI:', redirectUri);
+  console.log('  Code:', code);
   try {
     const params = new URLSearchParams({
       code,
@@ -54,6 +56,7 @@ app.get('/api/auth', async (req, res) => {
       redirect_uri: redirectUri,
       grant_type: 'authorization_code',
     });
+    console.log('[OAuth] Token exchange params:', params.toString());
     const response = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: {
@@ -62,15 +65,18 @@ app.get('/api/auth', async (req, res) => {
       body: params.toString(),
     });
     if (!response.ok) {
+      const errorData = await response.json();
+      console.error('[OAuth] Error exchanging code:', errorData);
       return res.redirect(`${frontendUrl}?auth=error`);
     }
     // Optionally, handle tokens here
     return res.redirect(`${frontendUrl}?auth=success`);
   } catch (error) {
+    console.error('[OAuth] Server error:', error);
     return res.redirect(`${frontendUrl}?auth=error`);
   }
 });
 
 app.listen(port, () => {
   console.log(`API server listening at http://localhost:${port}`);
-}); 
+});

@@ -13,7 +13,9 @@ export default async function handler(req, res) {
     }
     const clientId = process.env.VITE_GOOGLE_CLIENT_ID;
     const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-    const redirectUri = process.env.VITE_GOOGLE_REDIRECT_URI_API || `${process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3001'}/api/auth`;
+    const redirectUri =
+      process.env.VITE_GOOGLE_REDIRECT_URI_API ||
+      `${process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3001'}/api/auth`;
     try {
       const params = new URLSearchParams({
         code,
@@ -40,4 +42,4 @@ export default async function handler(req, res) {
   } else {
     res.status(405).json({ error: 'Method Not Allowed' });
   }
-} 
+}
