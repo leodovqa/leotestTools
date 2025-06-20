@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set up CORS to allow requests from your Vite frontend
 app.use((req, res, next) => {
-  const allowedOrigin = 'http://localhost:3000';
+  const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:3000';
   const origin = req.headers.origin;
   if (origin === allowedOrigin) {
     res.header('Access-Control-Allow-Origin', origin);
@@ -48,7 +48,8 @@ app.use(
 app.get('/api/auth', async (req, res) => {
   const { code } = req.query;
   const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-  let redirectUri = process.env.VITE_GOOGLE_REDIRECT_URI_API;
+  let redirectUri =
+    process.env.VITE_GOOGLE_REDIRECT_URI_API || process.env.VITE_GOOGLE_REDIRECT_URI;
   if (!redirectUri) {
     if (process.env.VERCEL_URL) {
       redirectUri = `https://${process.env.VERCEL_URL}/api/auth`;
