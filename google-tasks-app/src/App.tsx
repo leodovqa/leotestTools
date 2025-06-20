@@ -52,7 +52,6 @@ function App() {
   const [authStatus, setAuthStatus] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
-  const sidebarRef = useRef<HTMLDivElement>(null);
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDetails, setTaskDetails] = useState('');
   const [taskDue, setTaskDue] = useState<string | null>(null);
@@ -62,6 +61,7 @@ function App() {
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const isProd = window.location.hostname === 'leotest-tools.vercel.app';
 
   useEffect(() => {
     // On page load, check session from backend
@@ -155,7 +155,7 @@ function App() {
             setUser(null);
             setAuthStatus(null);
           }}
-          isProd={false}
+          isProd={isProd}
           onOpenSidebar={() => setSidebarOpen(true)}
         />
         <Routes>
@@ -166,10 +166,10 @@ function App() {
               <div className="main-content flex flex-col items-center justify-center space-y-8">
                 {authStatus === 'success' && (
                   <p
-                    className={`text-xl font-bold ${false ? 'text-green-400' : 'text-yellow-400'}`}
-                    style={{ color: false ? '#4ade80' : '#fde047' }}
+                    className={`text-xl font-bold ${isProd ? 'text-green-400' : 'text-yellow-400'}`}
+                    style={{ color: isProd ? '#4ade80' : '#fde047' }}
                   >
-                    Login successful! You are using {false ? 'PROD' : 'DEV'} version.
+                    Login successful! You are using {isProd ? 'PROD' : 'DEV'} version.
                   </p>
                 )}
                 {authStatus === 'error' && (
