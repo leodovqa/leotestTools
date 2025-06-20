@@ -91,7 +91,7 @@ function App() {
         {user && (
           <div className="space-y-4">
             <p className="text-xl text-green-400">
-              Welcome, {user?.profile?.name || "Authenticated User"}!
+              Welcome, {user?.profile?.name || 'Authenticated User'}!
             </p>
             <button
               onClick={async () => {
