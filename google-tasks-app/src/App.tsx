@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import './App.css';
 import Sidebar from './components/Sidebar';
@@ -11,12 +11,10 @@ import MyTasksPage from './MyTasksPage.tsx';
 function TopBanner({
   user,
   onSignOut,
-  isProd,
   onOpenSidebar,
 }: {
   user: any;
   onSignOut: () => void;
-  isProd: boolean;
   onOpenSidebar: () => void;
 }) {
   const { pathname } = useLocation();
@@ -61,7 +59,6 @@ function App() {
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
-  const isProd = window.location.hostname === 'leotest-tools.vercel.app';
 
   useEffect(() => {
     // On page load, check session from backend
@@ -155,7 +152,6 @@ function App() {
             setUser(null);
             setAuthStatus(null);
           }}
-          isProd={isProd}
           onOpenSidebar={() => setSidebarOpen(true)}
         />
         <Routes>
@@ -166,10 +162,10 @@ function App() {
               <div className="main-content flex flex-col items-center justify-center space-y-8">
                 {authStatus === 'success' && (
                   <p
-                    className={`text-xl font-bold ${isProd ? 'text-green-400' : 'text-yellow-400'}`}
-                    style={{ color: isProd ? '#4ade80' : '#fde047' }}
+                    className={`text-xl font-bold ${window.location.hostname === 'leotest-tools.vercel.app' ? 'text-green-400' : 'text-yellow-400'}`}
+                    style={{ color: window.location.hostname === 'leotest-tools.vercel.app' ? '#4ade80' : '#fde047' }}
                   >
-                    Login successful! You are using {isProd ? 'PROD' : 'DEV'} version.
+                    Login successful! You are using {window.location.hostname === 'leotest-tools.vercel.app' ? 'PROD' : 'DEV'} version.
                   </p>
                 )}
                 {authStatus === 'error' && (
