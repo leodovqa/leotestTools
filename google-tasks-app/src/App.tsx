@@ -6,9 +6,11 @@ function App() {
   const [user, setUser] = useState<any>(null);
   const [authStatus, setAuthStatus] = useState<string | null>(null);
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+
   useEffect(() => {
     // On page load, check session from backend
-    fetch('http://localhost:3001/api/session', {
+    fetch(`${API_BASE_URL}/api/session`, {
       credentials: 'include',
     })
       .then((res) => (res.ok ? res.json() : { user: null }))
@@ -40,12 +42,12 @@ function App() {
   const login = useGoogleLogin({
     flow: 'auth-code',
     ux_mode: 'redirect',
-    redirect_uri: 'http://localhost:3001/api/auth',
+    redirect_uri: import.meta.env.VITE_GOOGLE_REDIRECT_URI,
     scope: 'https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/calendar',
     onSuccess: async (codeResponse) => {
       // Exchange code for tokens with backend
       try {
-        const response = await fetch('http://localhost:3001/api/auth', {
+        const response = await fetch(`${API_BASE_URL}/api/auth`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code: codeResponse.code }),
@@ -95,7 +97,7 @@ function App() {
             </p>
             <button
               onClick={async () => {
-                await fetch('http://localhost:3001/api/logout', {
+                await fetch(`${API_BASE_URL}/api/logout`, {
                   method: 'POST',
                   credentials: 'include',
                 });
