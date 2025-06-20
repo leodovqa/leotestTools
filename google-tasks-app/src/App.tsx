@@ -9,6 +9,8 @@ function App() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
   console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
 
+  const isProd = window.location.hostname === 'leotest-tools.vercel.app';
+
   useEffect(() => {
     // On page load, check session from backend
     fetch(`${API_BASE_URL}/api/session`, {
@@ -78,7 +80,10 @@ function App() {
         <h1 className="text-5xl font-extrabold mb-4 text-blue-400">Google Tasks Manager</h1>
         <p className="text-lg text-gray-400 mb-8">Your personal task management solution.</p>
         {authStatus === 'success' && (
-          <p className="text-xl text-green-400">Login successful! You can now use the app.</p>
+          <p className={`text-xl font-bold ${isProd ? 'text-green-400' : 'text-yellow-400'}`}
+            style={{ color: isProd ? '#4ade80' : '#fde047' }}>
+            Login successful! You are using {isProd ? 'PROD' : 'DEV'} version.
+          </p>
         )}
         {authStatus === 'error' && (
           <p className="text-xl text-red-400">Login failed. Please try again.</p>
