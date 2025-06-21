@@ -21,15 +21,13 @@ function TopBanner({ user, onOpenSidebar }: { user: any; onOpenSidebar: () => vo
           <span className="hamburger-line"></span>
         </button>
       </div>
-      <div className="top-banner-center">
-        <span className="top-banner-title">
-          {pathname === '/tasks' ? 'My Google Tasks' : 'Google Tasks Manager'}
-        </span>
-      </div>
+      <span className="top-banner-title">
+        {pathname === '/tasks' ? 'My Google Tasks' : 'Google Tasks Manager'}
+      </span>
       <div className="top-banner-right">
         {user && pathname === '/tasks' ? (
           <button onClick={() => navigate('/')} className="create-task-btn">
-            Create Task
+            New Task
           </button>
         ) : null}
       </div>
