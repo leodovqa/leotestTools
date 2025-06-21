@@ -355,6 +355,15 @@ function App() {
                 userName={user?.profile?.name}
                 homeUrl={'/'}
                 myTasksUrl={'/tasks'}
+                onSignOut={async () => {
+                  await fetch(`${API_BASE_URL}/api/logout`, {
+                    method: 'POST',
+                    credentials: 'include',
+                  });
+                  setUser(null);
+                  setAuthStatus(null);
+                  setSidebarOpen(false); // Close sidebar after signing out
+                }}
               />
             </>,
             document.body

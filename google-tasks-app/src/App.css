@@ -203,6 +203,25 @@ body,
   flex: 1;
   padding: 1.5rem 1rem;
 }
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid #4b5563;
+}
+.sidebar-signout-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background: #ef4444;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.18s;
+}
+.sidebar-signout-btn:hover {
+  background: #dc2626;
+}
 .sidebar-item {
   color: #fff;
   font-size: 1.1rem;
