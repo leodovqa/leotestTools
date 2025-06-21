@@ -5,19 +5,13 @@ import Sidebar from './components/Sidebar';
 import ReactDOM from 'react-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import MyTasksPage from './MyTasksPage.tsx';
 
-function TopBanner({
-  user,
-  onSignOut,
-  onOpenSidebar,
-}: {
-  user: any;
-  onSignOut: () => void;
-  onOpenSidebar: () => void;
-}) {
+function TopBanner({ user, onOpenSidebar }: { user: any; onOpenSidebar: () => void }) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   return (
     <div className="top-banner">
       <div className="top-banner-left">
@@ -25,19 +19,17 @@ function TopBanner({
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
         </button>
       </div>
-      <span className="top-banner-title">
-        {pathname === '/tasks' ? 'My Google Tasks' : 'Google Tasks Manager'}
-      </span>
+      <div className="top-banner-center">
+        <span className="top-banner-title">
+          {pathname === '/tasks' ? 'My Google Tasks' : 'Google Tasks Manager'}
+        </span>
+      </div>
       <div className="top-banner-right">
-        {user ? (
-          <button
-            onClick={onSignOut}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ml-4"
-          >
-            Sign Out
+        {user && pathname === '/tasks' ? (
+          <button onClick={() => navigate('/')} className="create-task-btn">
+            Create Task
           </button>
         ) : null}
       </div>
@@ -142,20 +134,16 @@ function App() {
   return (
     <Router>
       <div id="root" className="min-h-screen w-full bg-gray-900 text-white p-0">
-        <TopBanner
-          user={user}
-          onSignOut={async () => {
-            await fetch(`${API_BASE_URL}/api/logout`, {
-              method: 'POST',
-              credentials: 'include',
-            });
-            setUser(null);
-            setAuthStatus(null);
-          }}
-          onOpenSidebar={() => setSidebarOpen(true)}
-        />
+        <TopBanner user={user} onOpenSidebar={() => setSidebarOpen(true)} />
         <Routes>
-          <Route path="/tasks" element={<MyTasksPage />} />
+          <Route
+            path="/tasks"
+            element={
+              <div className="content-view">
+                <MyTasksPage />
+              </div>
+            }
+          />
           <Route
             path="/"
             element={
@@ -172,7 +160,7 @@ function App() {
                 <div className="content-view">
                   {authStatus === 'success' && (
                     <p
-                      className={`text-xl font-bold ${
+                      className={`text-xl font-bold text-center ${
                         window.location.hostname === 'leotest-tools.vercel.app'
                           ? 'text-green-400'
                           : 'text-yellow-400'
@@ -190,7 +178,9 @@ function App() {
                     </p>
                   )}
                   {authStatus === 'error' && (
-                    <p className="text-xl text-red-400">Login failed. Please try again.</p>
+                    <p className="text-xl text-red-400 text-center">
+                      Login failed. Please try again.
+                    </p>
                   )}
                   {user && (
                     <section className="addtask-section">
