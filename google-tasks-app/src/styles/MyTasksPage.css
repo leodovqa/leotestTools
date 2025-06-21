@@ -1,7 +1,7 @@
 /* Task List Card Styles for MyTasksPage */
 
 .tasklist-card {
-  padding-left: 0 !important;
+  padding: 1rem 0; /* Add some vertical padding */
   align-items: stretch;
   background: #23272f;
   color: #f3f4f6;
@@ -10,67 +10,147 @@
     0 1.5px 6px 0 rgba(0, 0, 0, 0.18);
 }
 
-.tasklist-checkbox {
-  display: flex;
-  align-items: flex-start; /* Align with the top of the row */
-  justify-content: center;
-  width: 48px;
-  height: 40px;
-  padding: 0;
-  margin: 0;
+/* === Task Grouping === */
+.task-group {
+  margin-bottom: 2rem; /* Space between date groups */
 }
 
-.tasklist-checkbox input[type='checkbox'] {
-  width: 14px;
-  height: 14px;
+.task-group-header {
+  padding: 0.5rem 1.5rem;
+  border-bottom: 1px solid #374151; /* Separator line */
+  margin-bottom: 1rem;
+}
+
+.task-group-header-title {
+  font-weight: 700;
+  font-size: 1.1rem; /* Slightly larger header font */
+  color: #93c5fd; /* Light blue color */
+  text-align: left; /* Align to the left */
+  width: 100%;
+}
+
+/* === Individual Task Row === */
+.task-row {
+  display: flex;
+  align-items: center; /* Vertically center content */
+  padding: 0 0.75rem; /* Horizontal padding for the row */
+  margin-bottom: 0.75rem; /* Space between tasks */
+  min-height: 40px;
+}
+
+/* === Checkbox Cell === */
+.task-checkbox-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Fixed width for alignment */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.task-checkbox-cell input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  margin: 0;
-  accent-color: #60a5fa;
-  vertical-align: top;
   appearance: none;
   border: 2px solid #60a5fa;
   background: #181b20;
   cursor: pointer;
-  display: inline-block;
   position: relative;
+  transition: background-color 0.15s;
 }
 
-.tasklist-checkbox input[type='checkbox']:checked::after {
+.task-checkbox-cell input[type='checkbox']:hover {
+  background-color: #2b303b;
+}
+
+.task-checkbox-cell input[type='checkbox']:checked {
+  background-color: #60a5fa; /* Blue background when checked */
+  border-color: #60a5fa;
+}
+
+/* Custom checkmark using ::after pseudo-element */
+.task-checkbox-cell input[type='checkbox']:checked::after {
   content: '';
   display: block;
-  width: 8px;
-  height: 8px;
-  background: #60a5fa;
-  border-radius: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 1px; /* Nudged down slightly */
+  left: 5px; /* Nudged right slightly */
 }
 
-.tasklist-content {
+/* === Content Cell (Title, Notes, Date) === */
+.task-content-cell {
+  flex-grow: 1;
+  word-break: break-word;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
-  padding-left: 24px;
   text-align: left;
-  margin: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-left: 0.5rem; /* Space between checkbox and text */
 }
 
 .task-title {
-  line-height: 1.3;
-  margin: 0;
-  padding: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 500;
 }
 
 .task-notes {
-  line-height: 1.2;
-  margin: 0;
-  padding: 0;
+  font-size: 0.9rem; /* Larger notes text */
+  line-height: 1.3;
+  color: #a0aec0; /* Lighter gray for notes */
 }
 
+.task-completed-date {
+  font-size: 0.85rem; /* Larger completion date */
+  color: #718096; /* Even lighter gray */
+  margin-top: 2px;
+}
+
+/* === Completed Tasks Styling === */
+.task-row.is-completed .task-title {
+  text-decoration: line-through;
+  color: #718096;
+}
+.task-row.is-completed .task-notes {
+  text-decoration: line-through;
+  color: #5a6679;
+}
+
+.task-group-header.is-collapsible {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition: background-color 0.15s;
+  border-radius: 4px;
+  margin: 0;
+  padding: 0.5rem 1.5rem;
+}
+
+.task-group-header.is-collapsible .task-group-header-title {
+  width: auto;
+}
+
+.task-group-header.is-collapsible:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.collapsible-chevron {
+  transition: transform 0.2s ease-in-out;
+  color: #a0aec0;
+}
+
+.collapsible-chevron.is-closed {
+  transform: rotate(-90deg);
+}
+
+/* === Specific styles from old classes (if needed elsewhere) === */
 .completed-check-btn:hover svg circle {
   stroke: #a3e635;
   transition: stroke 0.15s;

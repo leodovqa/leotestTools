@@ -8,13 +8,12 @@ body,
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden;
+  /* overflow: hidden; */ /* This was preventing scrolling */
 }
 
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
 }
 
 .logo {
@@ -58,36 +57,28 @@ body,
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 64px;
-  background: #3d3c3c; /* Tailwind's bg-gray-700 */
-  border-bottom: 1px solid #4b5563; /* Tailwind's border-gray-600 */
-  display: flex;
-  align-items: center;
+  background: #3d3c3c;
+  border-bottom: 1px solid #4b5563;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  padding: 0 0.5rem;
 }
 .top-banner-left {
   position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  min-width: 56px;
-  z-index: 2;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .top-banner-center {
-  flex: 1;
-  text-align: center;
+  /* This class is no longer used for positioning */
 }
 .top-banner-title {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   color: #7dd3fc;
   white-space: nowrap;
   user-select: none;
@@ -95,25 +86,36 @@ body,
 }
 .top-banner-right {
   position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-width: 120px;
-  z-index: 2;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
-.top-banner-right button {
-  margin-right: 20px;
+.top-banner-right .create-task-btn {
+  background-color: #f97316;
+  color: white;
+  font-weight: bold;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.18s;
+  margin-right: 0; /* No longer needed */
+}
+
+.top-banner-right .create-task-btn:hover {
+  background-color: #ea580c;
 }
 
 /* For the logged-in view */
 .content-view {
-  padding-top: 64px;
+  padding-top: 80px; /* Consistent padding from top banner */
   width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
+  max-width: 640px; /* Set a max-width for content */
+  margin: 0 auto; /* Center the content block */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 
 /* For the logged-out view */
@@ -197,6 +199,25 @@ body,
 .sidebar-content {
   flex: 1;
   padding: 1.5rem 1rem;
+}
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid #4b5563;
+}
+.sidebar-signout-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background: #ef4444;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.18s;
+}
+.sidebar-signout-btn:hover {
+  background: #dc2626;
 }
 .sidebar-item {
   color: #fff;
@@ -507,4 +528,10 @@ body,
 .addtask-dark-btn:active {
   background: #5365cb !important;
   color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  #root {
+    width: 100%;
+  }
 }
