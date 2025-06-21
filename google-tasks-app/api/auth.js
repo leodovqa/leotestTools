@@ -23,12 +23,12 @@ export default async function handler(req, res) {
     return res.redirect(`${frontendUrl}?auth=error`);
   }
 
-  const redirectUri = `https://${process.env.VERCEL_URL}/api/auth`;
+  const redirectUri = process.env.VITE_GOOGLE_REDIRECT_URI;
   const clientId = process.env.VITE_GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
-  if (!clientId || !clientSecret) {
-    console.error('[OAuth] Missing Client ID or Secret');
+  if (!clientId || !clientSecret || !redirectUri) {
+    console.error('[OAuth] Missing Client ID, Secret, or Redirect URI');
     return res.status(500).json({ error: 'Server configuration error' });
   }
 
