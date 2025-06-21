@@ -168,6 +168,7 @@ function App() {
                           window.location.hostname === 'leotest-tools.vercel.app'
                             ? '#4ade80'
                             : '#fde047',
+                        textAlign: 'center',
                       }}
                     >
                       Login successful! You are using{' '}
