@@ -178,11 +178,11 @@ body,
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100dvh; /* Use dynamic viewport height */
   width: 30vw;
   min-width: 220px;
   max-width: 400px;
-  background: #3d3c3c; /* lighter gray */
+  background: #3d3c3c;
   box-shadow: 2px 0 16px rgba(0, 0, 0, 0.18);
   z-index: 1000;
   display: flex;
@@ -195,18 +195,18 @@ body,
   padding: 1rem;
   border-bottom: 1px solid #9cab45;
   position: relative;
-  flex-shrink: 0; /* Prevent header from shrinking */
+  flex-shrink: 0;
 }
 .sidebar-content {
-  flex: 1; /* Let the content area grow to fill available space */
-  overflow-y: auto; /* Only this area will scroll if content overflows */
+  flex: 1; /* Let the content area grow */
+  overflow-y: auto; /* Only this area will scroll */
   padding: 1.5rem 1rem;
-  min-height: 0; /* Necessary for flexbox scrolling */
 }
 .sidebar-footer {
   padding: 1rem;
   border-top: 1px solid #4b5563;
   flex-shrink: 0; /* Prevent footer from shrinking */
+  background: #3d3c3c;
 }
 .sidebar-signout-btn {
   width: 100%;
@@ -532,6 +532,13 @@ body,
 .addtask-dark-btn:active {
   background: #5365cb !important;
   color: #fff !important;
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 85vw;
+    max-width: 85vw;
+  }
 }
 
 @media (max-width: 768px) {
