@@ -78,8 +78,8 @@
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
   position: absolute;
-  top: 2px;
-  left: 6px;
+  top: 1px; /* Nudged down slightly */
+  left: 5px; /* Nudged right slightly */
 }
 
 /* === Content Cell (Title, Notes, Date) === */
