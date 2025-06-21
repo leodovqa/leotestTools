@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import './styles/MyTasksPage.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
@@ -63,7 +63,7 @@ function groupTasksByDate(tasks: Task[]) {
 
 const MyTasksPage: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [updatingTaskId, setUpdatingTaskId] = useState<string | null>(null);
   const [completedOpen, setCompletedOpen] = useState(true);
 
