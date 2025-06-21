@@ -75,7 +75,7 @@ export default async function handler(req, res) {
       'Set-Cookie',
       `user=${encodeURIComponent(
         JSON.stringify(user)
-      )}; Path=/; HttpOnly; SameSite=Lax; Max-Age=3600; Secure`
+      )}; Path=/; HttpOnly; SameSite=None; Max-Age=3600; Secure`
     );
 
     return res.redirect(`${frontendUrl}?auth=success`);

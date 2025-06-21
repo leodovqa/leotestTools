@@ -107,15 +107,46 @@ body,
 .top-banner-right button {
   margin-right: 20px;
 }
-.main-content {
+
+/* For the logged-in view */
+.content-view {
   padding-top: 64px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
+}
+
+/* For the logged-out view */
+.logged-out-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main-content {
+  padding-top: 64px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* This rule will ONLY apply when the .is-logged-out class is present */
+.main-content.is-logged-out {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding-top: 0;
+  max-width: none;
+}
+
+.main-content button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .hamburger-btn {
@@ -221,7 +252,6 @@ body,
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 7rem;
 }
 .addtask-title {
   font-size: 2rem;
