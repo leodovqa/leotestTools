@@ -331,16 +331,12 @@ function App() {
                               {saving ? 'Saving...' : 'Save'}
                             </button>
                             {saveSuccess && (
-                              <div
-                                style={{ color: '#4cae4f', textAlign: 'center', marginTop: 8 }}
-                              >
+                              <div style={{ color: '#4cae4f', textAlign: 'center', marginTop: 8 }}>
                                 Task created!
                               </div>
                             )}
                             {saveError && (
-                              <div
-                                style={{ color: '#e53e3e', textAlign: 'center', marginTop: 8 }}
-                              >
+                              <div style={{ color: '#e53e3e', textAlign: 'center', marginTop: 8 }}>
                                 {saveError}
                               </div>
                             )}
