@@ -69,36 +69,35 @@ body,
   padding: 0 0.5rem;
 }
 .top-banner-left {
-  display: flex;
-  align-items: center;
-  flex: 1; /* Takes up 1/3 space */
-  justify-content: flex-start;
+  position: relative;
+  z-index: 2;
 }
 .top-banner-center {
-  flex: 1; /* Takes up 1/3 space */
+  position: absolute;
+  left: 0;
+  right: 0;
   text-align: center;
+  pointer-events: none; /* Allows clicks to go through to elements behind it */
 }
 .top-banner-title {
   font-size: 1.25rem;
   color: #7dd3fc;
   white-space: nowrap;
   user-select: none;
-  pointer-events: none;
 }
 .top-banner-right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 1; /* Takes up 1/3 space */
+  position: relative;
+  z-index: 2;
 }
 .top-banner-right button {
   margin-right: 20px;
 }
 .top-banner-right .create-task-btn {
-  background-color: #4cae4f;
+  background-color: #f97316;
   color: white;
   font-weight: bold;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem; /* Reduced padding */
+  font-size: 0.9rem; /* Reduced font size */
   border-radius: 6px;
   border: none;
   cursor: pointer;
@@ -107,7 +106,7 @@ body,
 }
 
 .top-banner-right .create-task-btn:hover {
-  background-color: #45a049;
+  background-color: #ea580c;
 }
 
 /* For the logged-in view */
