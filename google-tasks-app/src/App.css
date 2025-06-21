@@ -195,17 +195,18 @@ body,
   padding: 1rem;
   border-bottom: 1px solid #9cab45;
   position: relative;
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 .sidebar-content {
-  flex: 1 1 auto;
-  overflow-y: auto;
+  flex: 1; /* Let the content area grow to fill available space */
+  overflow-y: auto; /* Only this area will scroll if content overflows */
   padding: 1.5rem 1rem;
-  min-height: 0;
+  min-height: 0; /* Necessary for flexbox scrolling */
 }
 .sidebar-footer {
   padding: 1rem;
   border-top: 1px solid #4b5563;
-  /* No scrolling here */
+  flex-shrink: 0; /* Prevent footer from shrinking */
 }
 .sidebar-signout-btn {
   width: 100%;
