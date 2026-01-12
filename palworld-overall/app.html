@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palworld Dark Mode Table</title>
+<link rel="icon" type="image/png" href="assets/palworld_icon.png" />
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<section id="palSection">
+<h1>Palworld Pure Attack & Movement</h1>
+
+<!-- Main container: centers controls and table together -->
+<div id="mainContainer" style="max-width:1800px;margin:0 auto;padding-top:4px;">
+
+<!-- Controls: search + filters aligned with table -->
+<div class="controls" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+  <input type="search" id="searchBox" placeholder="Search by any text..." style="width:200px;padding:6px;border-radius:4px;border:none;outline:none;" />
+
+  <!-- Filters: element, mount type, attack, move -->
+  <div id="filters" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+    <label style="color:#ddd">Element:
+      <select id="filterElement" class="filter-input"><option value="">All</option></select>
+    </label>
+    <label style="color:#ddd">Mount Type:
+      <select id="filterMount" class="filter-input"><option value="">All</option></select>
+    </label>
+    <label style="color:#ddd">Attack:
+      <select id="filterAttack" class="filter-input"><option value="">All</option></select>
+    </label>
+    <label style="color:#ddd">Move:
+      <select id="filterMove" class="filter-input"><option value="">All</option></select>
+    </label>
+    <label style="color:#ddd">Mastery:
+      <select id="filterMastery" class="filter-input"><option value="">All</option></select>
+    </label>
+    <label id="levelLabel" style="color:#ddd;display:none;">Level:
+      <select id="filterLevel" class="filter-input"><option value="">All</option></select>
+    </label>
+    <button id="clearFilters" style="padding:6px 10px;border-radius:6px;border:none;background:#2b2b2b;color:#fff;cursor:pointer;">Clear</button>
+  </div>
+  </div>
+
+<table id="palTable">
+  <thead>
+    <tr>
+      <th data-key="palNum">Pal #</th>
+      <th data-key="palName">Pal Name</th>
+      <th data-key="element">Element</th>
+      <th data-key="attack1">Attack 1</th>
+      <th data-key="attack2">Attack 2</th>
+      <th data-key="attack3">Attack 3</th>
+      <th data-key="attack4">Attack 4</th>
+      <th data-key="attackAlt">Attack Alt</th>
+      <th data-key="move1">Move 1</th>
+      <th data-key="move2">Move 2</th>
+      <th data-key="move3">Move 3</th>
+      <th data-key="move4">Move 4</th>
+      <th data-key="moveAlt">Move Alt</th>
+      <th data-key="mountType">Mount Type</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+</div>
+
+</section>
+
+<script>
+const tableBody = document.querySelector("#palTable tbody");
+const searchBox = document.getElementById("searchBox");
+let pals = [];
+let rawMap = {};
+let iconManifest = {};
+let nameColWidth = 0; // computed from longest pal name (in ch units)
+
+// Load data from pals.json
+fetch("pals.json")
+  .then(res => res.json())
+  .then(data => {
+    pals = data;
+    // also try to load raw data and manifest for modal details
+    Promise.all([
+      fetch('pals_raw.json').then(r=>r.ok? r.json(): []).catch(()=>[]),
+      fetch('assets/pals_icons/manifest.json').then(r=>r.ok? r.json(): {}).catch(()=>({})),
+      fetch('assets/work_icons/manifest.json').then(r=>r.ok? r.json(): {}).catch(()=>({})),
+      fetch('assets/element_icons/manifest.json').then(r=>r.ok? r.json(): {}).catch(()=>({}))
+    ]).then(([raw, manifest, workManifest, elementManifest]) => {
+      if(Array.isArray(raw)) raw.forEach(r => rawMap[String(r.number)] = r);
+      iconManifest = manifest || {};
+      window.workIconManifest = workManifest || {};
+      window.elementIconManifest = elementManifest || {};
+
+      // compute the longest pal name (characters) and set the header width
+      try {
+        nameColWidth = pals.reduce((max, p) => Math.max(max, (p.palName || '').length), 0);
+        const thName = document.querySelector('th[data-key="palName"]');
+        if (thName && nameColWidth > 0) {
+          const w = (nameColWidth + 2) + 'ch';
+          thName.style.width = w;
+          thName.style.maxWidth = w;
+          thName.style.whiteSpace = 'nowrap';
+          thName.style.boxSizing = 'border-box';
+        }
+      } catch (e) { /* ignore */ }
+
+      // populate filter selects: elements and mount types
+      try {
+        const elemSelect = document.getElementById('filterElement');
+        const mountSelect = document.getElementById('filterMount');
+        // gather unique elements (split comma lists)
+        const elemSet = new Set();
+        pals.forEach(p => {
+          const e = (p.element || '').split(',').map(s=>s.trim()).filter(Boolean);
+          e.forEach(x => elemSet.add(x));
+        });
+        Array.from(elemSet).sort().forEach(el => {
+          const opt = document.createElement('option'); opt.value = el; opt.textContent = el; elemSelect.appendChild(opt);
+        });
+
+        // mount types from pals (non-empty)
+        const mountSet = new Set();
+        pals.forEach(p => { if (p.mountType) mountSet.add(String(p.mountType)); });
+        Array.from(mountSet).sort().forEach(m => {
+          const opt = document.createElement('option'); opt.value = m; opt.textContent = m; mountSelect.appendChild(opt);
+        });
+
+        // wire filter events and populate attack/move/mastery dropdowns
+        const attackSelect = document.getElementById('filterAttack');
+        const moveSelect = document.getElementById('filterMove');
+        const masterySelect = document.getElementById('filterMastery');
+        const levelSelect = document.getElementById('filterLevel');
+        const levelLabel = document.getElementById('levelLabel');
+        const clearBtn = document.getElementById('clearFilters');
+        // collect unique attack and move passive names
+        const attackSet = new Set();
+        const moveSet = new Set();
+        const masterySet = new Set();
+        const masteryMaxLevels = {}; // map mastery type -> max level
+        pals.forEach(p => {
+          ['attack1','attack2','attack3','attack4','attackAlt'].forEach(k => { if (p[k]) attackSet.add(String(p[k])); });
+          ['move1','move2','move3','move4','moveAlt'].forEach(k => { if (p[k]) moveSet.add(String(p[k])); });
+        });
+        // collect masteries from rawMap workSuitability and track max levels
+        Object.values(rawMap).forEach(raw => {
+          if (raw.workSuitability && Array.isArray(raw.workSuitability)) {
+            raw.workSuitability.forEach(w => { 
+              if (w.type) {
+                masterySet.add(String(w.type)); 
+                const level = w.level || 0;
+                if (!masteryMaxLevels[w.type] || level > masteryMaxLevels[w.type]) {
+                  masteryMaxLevels[w.type] = level;
+                }
+              }
+            });
+          }
+        });
+        Array.from(attackSet).sort().forEach(a => { const opt = document.createElement('option'); opt.value = a; opt.textContent = a; attackSelect.appendChild(opt); });
+        Array.from(moveSet).sort().forEach(mv => { const opt = document.createElement('option'); opt.value = mv; opt.textContent = mv; moveSelect.appendChild(opt); });
+        Array.from(masterySet).sort().forEach(m => { const opt = document.createElement('option'); opt.value = m; opt.textContent = m; masterySelect.appendChild(opt); });
+
+        elemSelect.addEventListener('change', () => renderTableRows(searchBox.value));
+        mountSelect.addEventListener('change', () => renderTableRows(searchBox.value));
+        attackSelect.addEventListener('change', () => renderTableRows(searchBox.value));
+        moveSelect.addEventListener('change', () => renderTableRows(searchBox.value));
+        masterySelect.addEventListener('change', () => {
+          // when mastery changes, show/hide level dropdown and repopulate it
+          if (masterySelect.value) {
+            levelLabel.style.display = 'inline-block';
+            levelSelect.innerHTML = '<option value="">All</option>';
+            const maxLevel = masteryMaxLevels[masterySelect.value] || 1;
+            for (let i = 1; i <= maxLevel; i++) {
+              const opt = document.createElement('option');
+              opt.value = String(i);
+              opt.textContent = 'Lv ' + i;
+              levelSelect.appendChild(opt);
+            }
+            levelSelect.value = ''; // reset level to "All"
+          } else {
+            levelLabel.style.display = 'none';
+            levelSelect.value = '';
+          }
+          renderTableRows(searchBox.value);
+        });
+        levelSelect.addEventListener('change', () => renderTableRows(searchBox.value));
+        clearBtn.addEventListener('click', () => { elemSelect.value=''; mountSelect.value=''; attackSelect.value=''; moveSelect.value=''; masterySelect.value=''; levelSelect.value=''; levelLabel.style.display='none'; renderTableRows(''); searchBox.value=''; });
+      } catch (e) { /* ignore */ }
+
+      sortByPalNumber();
+      renderTableRows();
+    }).catch(() => { sortByPalNumber(); renderTableRows(); });
+  })
+  .catch(err => console.error("Error loading pals.json:", err));
+
+function renderTableRows(filter = "") {
+  const filterLower = filter.toLowerCase();
+  const elemSelectVal = (document.getElementById('filterElement') && document.getElementById('filterElement').value) ? String(document.getElementById('filterElement').value).toLowerCase() : '';
+  const mountSelectVal = (document.getElementById('filterMount') && document.getElementById('filterMount').value) ? String(document.getElementById('filterMount').value).toLowerCase() : '';
+  const attackFilterVal = (document.getElementById('filterAttack') && document.getElementById('filterAttack').value) ? String(document.getElementById('filterAttack').value).toLowerCase() : '';
+  const moveFilterVal = (document.getElementById('filterMove') && document.getElementById('filterMove').value) ? String(document.getElementById('filterMove').value).toLowerCase() : '';
+  const masteryFilterVal = (document.getElementById('filterMastery') && document.getElementById('filterMastery').value) ? String(document.getElementById('filterMastery').value) : '';
+  const levelFilterVal = (document.getElementById('filterLevel') && document.getElementById('filterLevel').value) ? parseInt(document.getElementById('filterLevel').value, 10) : null;
+  
+  tableBody.innerHTML = "";
+  let rows = [];
+  pals.forEach(pal => {
+    const combinedValues = Object.values(pal).join(" ").toLowerCase();
+    if (combinedValues.includes(filterLower)) {
+      // element filter: pal.element can be comma separated
+      if (elemSelectVal) {
+        const elems = (pal.element || '').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
+        if (!elems.includes(elemSelectVal)) return;
+      }
+      // mount type filter
+      if (mountSelectVal) {
+        const mt = String(pal.mountType || '').toLowerCase();
+        if (!mt || !mt.includes(mountSelectVal)) return;
+      }
+      // attack filter across attack1..attack4 and attackAlt
+      if (attackFilterVal) {
+        const attacks = [pal.attack1, pal.attack2, pal.attack3, pal.attack4, pal.attackAlt].map(s => String(s||'').toLowerCase());
+        if (!attacks.some(a => a.includes(attackFilterVal))) return;
+      }
+      // move filter across move1..move4 and moveAlt
+      if (moveFilterVal) {
+        const moves = [pal.move1, pal.move2, pal.move3, pal.move4, pal.moveAlt].map(s => String(s||'').toLowerCase());
+        if (!moves.some(m => m.includes(moveFilterVal))) return;
+      }
+      // mastery filter: check if pal has this mastery in rawMap
+      let masteryLevel = null;
+      if (masteryFilterVal) {
+        const raw = rawMap[String(pal.palNum)];
+        if (raw && raw.workSuitability) {
+          const found = raw.workSuitability.find(w => w.type === masteryFilterVal);
+          if (!found) return; // pal does not have this mastery, skip
+          masteryLevel = found.level || 0;
+          // level filter: check if pal's mastery level matches selected level
+          if (levelFilterVal !== null && masteryLevel !== levelFilterVal) {
+            return; // level does not match, skip
+          }
+        } else {
+          return; // no work data, skip
+        }
+      }
+      const row = document.createElement("tr");
+      // attach pal number for modal lookup
+      row.dataset.palnum = pal.palNum || pal.palnum || pal.num || pal.number;
+      // attach mastery level for sorting (when mastery filter is active)
+      if (masteryLevel !== null) row.dataset.masteryLevel = masteryLevel;
+      for (const key in pal) {
+        const cell = document.createElement("td");
+        // Pal Name column: enforce computed width when available
+        if (key === 'palName' && nameColWidth > 0) {
+          const w = (nameColWidth + 2) + 'ch';
+          cell.style.width = w;
+          cell.style.maxWidth = w;
+          cell.style.whiteSpace = 'nowrap';
+          cell.style.overflow = 'hidden';
+          cell.style.textOverflow = 'ellipsis';
+          cell.style.boxSizing = 'border-box';
+        }
+
+        // Render element with one or more icons when available
+        if (key === 'element') {
+          const elemText = pal[key] || '';
+          const elems = elemText.split(',').map(s => s.trim()).filter(Boolean);
+          const frag = document.createDocumentFragment();
+          elems.forEach(eName => {
+            const em = (window.elementIconManifest && window.elementIconManifest[eName]) ? window.elementIconManifest[eName] : null;
+            if (em && em.filename) {
+              const img = document.createElement('img');
+              img.src = 'assets/element_icons/' + em.filename;
+              img.alt = eName + ' icon';
+              img.style.width = '18px';
+              img.style.height = '18px';
+              img.style.objectFit = 'contain';
+              img.style.verticalAlign = 'middle';
+              img.style.marginRight = '6px';
+              frag.appendChild(img);
+            }
+          });
+          const txt = document.createElement('span');
+          const count = elems.length;
+          txt.textContent = elemText + (count > 1 ? ' (' + count + ')' : '');
+          frag.appendChild(txt);
+          cell.appendChild(frag);
+        } else {
+          cell.textContent = pal[key];
+        }
+
+        cell.setAttribute("data-label", key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()));
+        row.appendChild(cell);
+      }
+      // open modal on row click
+      row.addEventListener('click', () => {
+        const id = String(row.dataset.palnum || '');
+        openPalModal(id);
+      });
+      rows.push(row);
+    }
+  });
+  
+  // if mastery filter is active, sort rows by mastery level (descending)
+  if (masteryFilterVal) {
+    rows.sort((a, b) => {
+      const levelA = parseInt(a.dataset.masteryLevel || 0, 10);
+      const levelB = parseInt(b.dataset.masteryLevel || 0, 10);
+      return levelB - levelA; // descending order (high to low)
+    });
+  }
+  
+  // append sorted rows to table
+  rows.forEach(row => tableBody.appendChild(row));
+}
+
+// Filter on search input
+searchBox.addEventListener("input", e => renderTableRows(e.target.value));
+
+// Sorting
+const headers = document.querySelectorAll("#palTable th");
+let sortDirection = {};
+
+// Default sort by Pal # (palNum) in descending order
+function sortByPalNumber() {
+  sortDirection = { 'palNum': 'desc' };
+  pals.sort((a, b) => {
+    const numA = parseInt(String(a.palNum || '').replace(/[^0-9]/g, ''), 10) || 0;
+    const numB = parseInt(String(b.palNum || '').replace(/[^0-9]/g, ''), 10) || 0;
+    return numB - numA;
+  });
+  const palNumHeader = document.querySelector('th[data-key="palNum"]');
+  if (palNumHeader) {
+    headers.forEach(h => h.classList.remove("sort-asc", "sort-desc"));
+    palNumHeader.classList.add("sort-desc");
+  }
+}
+
+headers.forEach(header => {
+  header.addEventListener("click", () => {
+    const key = header.getAttribute("data-key");
+    if (!key) return;
+    sortDirection[key] = sortDirection[key] === "asc" ? "desc" : "asc";
+    pals.sort((a,b) => {
+      let valA = a[key] ? a[key].toString().toLowerCase() : "";
+      let valB = b[key] ? b[key].toString().toLowerCase() : "";
+      if(!isNaN(parseFloat(valA)) && !isNaN(parseFloat(valB))){
+        valA=parseFloat(valA); valB=parseFloat(valB);
+      }
+      if(valA<valB) return sortDirection[key]==='asc'?-1:1;
+      if(valA>valB) return sortDirection[key]==='asc'?1:-1;
+      return 0;
+    });
+    headers.forEach(h=>h.classList.remove("sort-asc","sort-desc"));
+    header.classList.add(sortDirection[key]==='asc'?"sort-asc":"sort-desc");
+    renderTableRows(searchBox.value);
+  });
+});
+</script>
+
+<!-- Modal for pal details -->
+<div id="palModal" aria-hidden="true" style="display:none;">
+  <div id="palModalOverlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:40;">
+    <div id="palModalBox" style="background:#0f0f0f;color:#fff;border:1px solid #333;border-radius:8px;max-width:520px;width:92%;padding:18px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.6);">
+      <button id="palModalCloseX" aria-label="Close" style="position:absolute;right:8px;top:8px;background:transparent;border:none;color:#ddd;font-size:20px;cursor:pointer;">✕</button>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <img id="palModalIcon" src="" alt="pal icon" style="width:96px;height:96px;object-fit:contain;border-radius:6px;background:#111;border:1px solid #222;" />
+        <div>
+          <div style="font-size:1.2rem;font-weight:700" id="palModalName">Pal Name</div>
+          <div style="color:#bbb;margin-top:4px;" id="palModalNumber">#000</div>
+          <div style="margin-top:8px;color:#ddd;font-size:0.95rem;" id="palModalElement">Element: </div>
+        </div>
+      </div>
+      <hr style="border:none;border-top:1px solid #222;margin:12px 0;" />
+      <div id="palModalWorks" style="max-height:260px;overflow:auto;font-size:0.95rem;color:#e6e6e6;">
+        <!-- work suitability list inserted here -->
+      </div>
+      <div style="text-align:center;margin-top:14px;">
+        <button id="palModalClose" style="padding:8px 18px;border-radius:6px;border:none;background:#1f6feb;color:#fff;cursor:pointer;">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openPalModal(palNum) {
+  const modal = document.getElementById('palModal');
+  const iconEl = document.getElementById('palModalIcon');
+  const nameEl = document.getElementById('palModalName');
+  const numEl = document.getElementById('palModalNumber');
+  const worksEl = document.getElementById('palModalWorks');
+  const elementEl = document.getElementById('palModalElement');
+
+  // lookup in pals array as fallback
+  const pal = pals.find(p => String(p.palNum) === String(palNum));
+  const raw = rawMap[palNum] || {};
+
+  nameEl.textContent = pal?.palName || raw.name || 'Unknown';
+  numEl.textContent = '#' + (pal?.palNum || raw.number || palNum);
+  const elementText = (pal?.element || (raw.elements && raw.elements.join(', ')) || '—');
+  // show element icons in modal when available (all elements)
+  const elemsModal = elementText.split(',').map(s => s.trim()).filter(Boolean);
+  elementEl.innerHTML = '';
+  const fragEl = document.createDocumentFragment();
+  elemsModal.forEach(eName => {
+    const entry = (window.elementIconManifest && window.elementIconManifest[eName]) ? window.elementIconManifest[eName] : null;
+    if (entry && entry.filename) {
+      const img = document.createElement('img');
+      img.src = 'assets/element_icons/' + entry.filename;
+      img.alt = eName + ' icon';
+      img.style.width = '20px'; img.style.height = '20px'; img.style.objectFit='contain'; img.style.verticalAlign='middle'; img.style.marginRight='8px';
+      fragEl.appendChild(img);
+    }
+  });
+  const span = document.createElement('span'); span.textContent = 'Element: ' + elementText + (elemsModal.length > 1 ? ' (' + elemsModal.length + ')' : '');
+  fragEl.appendChild(span);
+  elementEl.appendChild(fragEl);
+
+  // icon: prefer local manifest entry, then try assets filename, else hide
+  let iconPath = '';
+  if (iconManifest && iconManifest[palNum] && iconManifest[palNum].filename) {
+    iconPath = 'assets/pals_icons/' + iconManifest[palNum].filename;
+  }
+  if (!iconPath && pal && pal.palName) {
+    const padded = String(pal.palNum).padStart(3,'0');
+    const safe = pal.palName.replace(/[^a-z0-9\-_]/gi,'_');
+    iconPath = `assets/pals_icons/${padded}_${safe}.png`;
+  }
+  // verify image exists by setting src (browser will show broken image if missing)
+  iconEl.src = iconPath || '';
+  iconEl.alt = nameEl.textContent + ' icon';
+
+  // work suitability: prefer raw.workSuitability array
+  worksEl.innerHTML = '';
+  const works = raw.workSuitability || [];
+  if (works.length) {
+    const ul = document.createElement('ul');
+    ul.style.paddingLeft = '18px';
+    works.forEach(w => {
+      const li = document.createElement('li');
+      li.style.display = 'flex';
+      li.style.alignItems = 'center';
+      li.style.gap = '8px';
+      const workType = w.type || '';
+      // try manifest lookup
+      const workEntry = (window.workIconManifest && window.workIconManifest[workType]) ? window.workIconManifest[workType] : null;
+      if (workEntry && workEntry.filename) {
+        const img = document.createElement('img');
+        img.src = 'assets/work_icons/' + workEntry.filename;
+        img.alt = workType + ' icon';
+        img.style.width = '20px';
+        img.style.height = '20px';
+        img.style.objectFit = 'contain';
+        img.style.opacity = '0.95';
+        li.appendChild(img);
+      } else {
+        // small placeholder square
+        const box = document.createElement('span');
+        box.style.display='inline-block'; box.style.width='18px'; box.style.height='18px'; box.style.background='#222'; box.style.border='1px solid #333'; box.style.borderRadius='3px';
+        li.appendChild(box);
+      }
+      const txt = document.createElement('span');
+      txt.textContent = workType + (w.level ? ' Lv. ' + w.level : '');
+      li.appendChild(txt);
+      ul.appendChild(li);
+    });
+    worksEl.appendChild(ul);
+  } else if (raw._rawText) {
+    const p = document.createElement('p'); p.textContent = raw._rawText; worksEl.appendChild(p);
+  } else {
+    worksEl.textContent = 'No work suitability data available.';
+  }
+
+  // show modal
+  modal.style.display = 'block';
+  modal.setAttribute('aria-hidden','false');
+}
+
+function closePalModal() {
+  const modal = document.getElementById('palModal');
+  modal.style.display = 'none';
+  modal.setAttribute('aria-hidden','true');
+}
+
+// overlay / close bindings
+document.addEventListener('click', (ev) => {
+  const overlay = document.getElementById('palModalOverlay');
+  if (!overlay) return;
+  const modalBox = document.getElementById('palModalBox');
+  if (overlay.style.display === 'flex' || document.getElementById('palModal').style.display === 'block') {
+    // if click is outside modalBox, close
+    if (ev.target === overlay) closePalModal();
+  }
+});
+document.getElementById('palModalCloseX').addEventListener('click', closePalModal);
+document.getElementById('palModalClose').addEventListener('click', closePalModal);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePalModal(); });
+</script>
+
+</body>
+</html>

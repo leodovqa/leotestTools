@@ -1,0 +1,62 @@
+{
+  "Cooling": {
+    "filename": "Cooling.png",
+    "url": "https://img.game8.co/3824100/6d0c65461692747e1c3baa6fd5ca1652.png/show",
+    "sourceAlt": "Palworld - Cooling Diamond Icon"
+  },
+  "Electricity": {
+    "filename": "Electricity.png",
+    "url": "https://img.game8.co/3824103/6aaca87fb7be0ece5f6655e09c045205.png/show",
+    "sourceAlt": "Palworld - Generating Electricity Diamond Icon"
+  },
+  "Farming": {
+    "filename": "Farming.png",
+    "url": "https://img.game8.co/3824099/8b62acd1385b540af4eff384e0a04a5e.png/show",
+    "sourceAlt": "Palworld - Farming Diamond Icon"
+  },
+  "Gathering": {
+    "filename": "Gathering.png",
+    "url": "https://img.game8.co/3824105/6b12875d575f1379ae1c3e0b133ed0fb.png/show",
+    "sourceAlt": "Palworld - Gathering Diamond Icon"
+  },
+  "Handiwork": {
+    "filename": "Handiwork.png",
+    "url": "https://img.game8.co/3824101/368533c5409763aed06ed53c738f6800.png/show",
+    "sourceAlt": "Palworld - Handiwork Diamond Icon"
+  },
+  "Kindling": {
+    "filename": "Kindling.png",
+    "url": "https://img.game8.co/3824104/c7fb1cc4ec8ad0e5ef7e189fe0c9eb27.png/show",
+    "sourceAlt": "Palworld - Kindling Diamond Icon"
+  },
+  "Lumbering": {
+    "filename": "Lumbering.png",
+    "url": "https://img.game8.co/3824102/b226e5ef2c5975fc339a2c6ec544e1c1.png/show",
+    "sourceAlt": "Palworld - Lumbering Diamond Icon"
+  },
+  "Medicine": {
+    "filename": "Medicine.png",
+    "url": "https://img.game8.co/3824107/a7c256946618ce5a7bf6996d5a4b8d82.png/show",
+    "sourceAlt": "Palworld - Medicine Production Diamond Icon"
+  },
+  "Mining": {
+    "filename": "Mining.png",
+    "url": "https://img.game8.co/3824109/93fb036dcd1afce86a6754e929dc4a51.png/show",
+    "sourceAlt": "Palworld - Mining Diamond Icon"
+  },
+  "Planting": {
+    "filename": "Planting.png",
+    "url": "https://img.game8.co/3824108/5597d4212a2b0e75a3015dfd1eb3c52c.png/show",
+    "sourceAlt": "Palworld - Planting Diamond Icon"
+  },
+  "Transporting": {
+    "filename": "Transporting.png",
+    "url": "https://img.game8.co/3824106/212b0ac2e552a6ea6613fbe5728b6c90.png/show",
+    "sourceAlt": "Palworld - Transporting Diamond Icon"
+  },
+  "Watering": {
+    "filename": "Watering.png",
+    "url": "https://img.game8.co/3824110/48f958400337bf80ae8f59a20c2effef.png/show",
+    "sourceAlt": "Palworld - Watering Diamond Icon"
+  }
+}

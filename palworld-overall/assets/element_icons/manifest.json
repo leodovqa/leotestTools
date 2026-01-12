@@ -1,0 +1,38 @@
+{
+  "Neutral": {
+    "filename": "neutral.svg",
+    "color": "#9e9e9e"
+  },
+  "Grass": {
+    "filename": "grass.svg",
+    "color": "#6bc46b"
+  },
+  "Fire": {
+    "filename": "fire.svg",
+    "color": "#ff6b35"
+  },
+  "Ice": {
+    "filename": "ice.svg",
+    "color": "#7fd0ff"
+  },
+  "Water": {
+    "filename": "water.svg",
+    "color": "#3aa3ff"
+  },
+  "Electric": {
+    "filename": "electric.svg",
+    "color": "#ffd86b"
+  },
+  "Ground": {
+    "filename": "ground.svg",
+    "color": "#c99b66"
+  },
+  "Dark": {
+    "filename": "dark.svg",
+    "color": "#8b5cff"
+  },
+  "Dragon": {
+    "filename": "dragon.svg",
+    "color": "#ff8fc7"
+  }
+}

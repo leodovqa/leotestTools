@@ -1,0 +1,762 @@
+No. 	Pal 	Element 	Work Suitability
+1 	Lamball ImageLamball 	Palworld - Neutral Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+FarmingFarming Lv. 1 - Wool
+2 	Cattiva ImageCattiva 	Palworld - Neutral Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+MiningMining Lv. 1
+3 	Chikipi ImageChikipi 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 1
+FarmingFarming Lv. 1 - Egg
+4 	Lifmunk ImageLifmunk 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 1
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 1
+Medicine ProductionMedicine Lv. 1
+GatheringGathering Lv. 1
+5 	Foxparks ImageFoxparks 	Palworld - Fire Icon 	
+KindlingKindling Lv. 1
+5B 	Foxparks Cryst ImageFoxparks Cryst 	Palworld - Ice Icon 	
+CoolingCooling Lv. 1
+6 	Fuack ImageFuack 	Palworld - Water Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+6B 	Fuack Ignis ImageFuack Ignis 	Palworld - Fire Icon Palworld - Water Icon 	
+KindlingKindling Lv. 1
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+7 	Sparkit ImageSparkit 	Palworld - Electric Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+ElectricityElectricity Lv. 1
+8 	Tanzee ImageTanzee 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 1
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 1
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+9 	Rooby ImageRooby 	Palworld - Fire Icon 	
+KindlingKindling Lv. 1
+10 	Pengullet ImagePengullet 	Palworld - Water Icon Palworld - Ice Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+CoolingCooling Lv. 1
+10B 	Pengullet Lux ImagePengullet Lux 	Palworld - Water Icon Palworld - Electric Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+ElectricityElectricity Lv. 2
+11 	Penking ImagePenking 	Palworld - Water Icon Palworld - Ice Icon 	
+HandiworkHandiwork Lv. 2
+TransportingTransporting Lv. 2
+WateringWatering Lv. 2
+MiningMining Lv. 2
+CoolingCooling Lv. 2
+11B 	Penking Lux ImagePenking Lux 	Palworld - Water Icon Palworld - Electric Icon 	
+HandiworkHandiwork Lv. 2
+TransportingTransporting Lv. 2
+WateringWatering Lv. 2
+ElectricityElectricity Lv. 2
+MiningMining Lv. 2
+12 	Jolthog ImageJolthog 	Palworld - Electric Icon 	
+ElectricityElectricity Lv. 1
+12B 	Jolthog Cryst ImageJolthog Cryst 	Palworld - Ice Icon 	
+CoolingCooling Lv. 1
+13 	Gumoss ImageGumoss 	Palworld - Grass Icon Palworld - Ground Icon 	
+PlantingPlanting Lv. 1
+13B 	Special Flower Gumoss ImageSpecial Flower Gumoss 	Palworld - Grass Icon Palworld - Ground Icon 	
+PlantingPlanting Lv. 1
+14 	Vixy ImageVixy 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 1
+FarmingFarming Lv. 1 - Various
+15 	Hoocrates ImageHoocrates 	Palworld - Dark Icon 	
+GatheringGathering Lv. 1
+16 	Teafant ImageTeafant 	Palworld - Water Icon 	
+WateringWatering Lv. 1
+17 	Depresso ImageDepresso 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+MiningMining Lv. 1
+18 	Cremis ImageCremis 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 1
+FarmingFarming Lv. 1 - Wool
+19 	Daedream ImageDaedream 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+20 	Rushoar ImageRushoar 	Palworld - Ground Icon 	
+MiningMining Lv. 1
+21 	Nox ImageNox 	Palworld - Dark Icon 	
+GatheringGathering Lv. 1
+22 	Fuddler ImageFuddler 	Palworld - Ground Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+MiningMining Lv. 1
+23 	Killamari ImageKillamari 	Palworld - Dark Icon 	
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 1
+23B 	Killamari Primo ImageKillamari Primo 	Palworld - Water Icon Palworld - Neutral Icon 	
+TransportingTransporting Lv. 2
+WateringWatering Lv. 1
+GatheringGathering Lv. 1
+24 	Mau ImageMau 	Palworld - Dark Icon 	
+FarmingFarming Lv. 1 - Gold Coin
+24B 	Mau Cryst ImageMau Cryst 	Palworld - Ice Icon 	
+CoolingCooling Lv. 1
+FarmingFarming Lv. 1 - Gold Coin
+25 	Celaray ImageCelaray 	Palworld - Water Icon 	
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+25B 	Celaray Lux ImageCelaray Lux 	Palworld - Water Icon Palworld - Electric Icon 	
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+ElectricityElectricity Lv. 1
+26 	Direhowl ImageDirehowl 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 1
+27 	Tocotoco ImageTocotoco 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 1
+28 	Flopie ImageFlopie 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 1
+HandiworkHandiwork Lv. 1
+Medicine ProductionMedicine Lv. 1
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+29 	Mozzarina ImageMozzarina 	Palworld - Neutral Icon 	
+FarmingFarming Lv. 1 - Milk
+30 	Bristla ImageBristla 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 1
+HandiworkHandiwork Lv. 1
+Medicine ProductionMedicine Lv. 2
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+31 	Gobfin ImageGobfin 	Palworld - Water Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+WateringWatering Lv. 2
+31B 	Gobfin Ignis ImageGobfin Ignis 	Palworld - Fire Icon 	
+KindlingKindling Lv. 2
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+32 	Hangyu ImageHangyu 	Palworld - Ground Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 1
+32B 	Hangyu Cryst ImageHangyu Cryst 	Palworld - Ice Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 1
+CoolingCooling Lv. 1
+33 	Mossanda ImageMossanda 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+HandiworkHandiwork Lv. 2
+LumberingLumbering Lv. 2
+TransportingTransporting Lv. 3
+33B 	Mossanda Lux ImageMossanda Lux 	Palworld - Electric Icon 	
+HandiworkHandiwork Lv. 2
+LumberingLumbering Lv. 2
+TransportingTransporting Lv. 3
+ElectricityElectricity Lv. 2
+34 	Woolipop ImageWoolipop 	Palworld - Neutral Icon 	
+FarmingFarming Lv. 1 - Cotton Candy
+35 	Caprity ImageCaprity 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+FarmingFarming Lv. 1 - Red Berries
+35B 	Caprity Noct ImageCaprity Noct 	Palworld - Dark Icon 	
+PlantingPlanting Lv. 2
+FarmingFarming Lv. 1 - Venom Gland
+36 	Melpaca ImageMelpaca 	Palworld - Neutral Icon 	
+FarmingFarming Lv. 1 - Wool
+37 	Eikthyrdeer ImageEikthyrdeer 	Palworld - Neutral Icon 	
+LumberingLumbering Lv. 2
+37B 	Eikthyrdeer Terra ImageEikthyrdeer Terra 	Palworld - Ground Icon 	
+LumberingLumbering Lv. 2
+38 	Nitewing ImageNitewing 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 2
+39 	Ribbuny ImageRibbuny 	Palworld - Neutral Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+39B 	Ribbuny Botan ImageRibbuny Botan 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 1
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+40 	Incineram ImageIncineram 	Palworld - Fire Icon Palworld - Dark Icon 	
+KindlingKindling Lv. 1
+HandiworkHandiwork Lv. 2
+TransportingTransporting Lv. 2
+MiningMining Lv. 1
+40B 	Incineram Noct ImageIncineram Noct 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 2
+TransportingTransporting Lv. 2
+MiningMining Lv. 1
+41 	Cinnamoth ImageCinnamoth 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+Medicine ProductionMedicine Lv. 1
+42 	Arsox ImageArsox 	Palworld - Fire Icon 	
+KindlingKindling Lv. 2
+LumberingLumbering Lv. 1
+43 	Dumud ImageDumud 	Palworld - Ground Icon 	
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+MiningMining Lv. 2
+FarmingFarming Lv. 1 - High Quality Pal Oil
+43B 	Dumud Gild ImageDumud Gild 	Palworld - Water Icon Palworld - Ground Icon 	
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+MiningMining Lv. 2
+FarmingFarming Lv. 1 - Various
+44 	Cawgnito ImageCawgnito 	Palworld - Dark Icon 	
+LumberingLumbering Lv. 1
+45 	Leezpunk ImageLeezpunk 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+45B 	Leezpunk Ignis ImageLeezpunk Ignis 	Palworld - Fire Icon 	
+KindlingKindling Lv. 1
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+46 	Loupmoon ImageLoupmoon 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 2
+46B 	Loupmoon Cryst ImageLoupmoon Cryst 	Palworld - Ice Icon 	
+HandiworkHandiwork Lv. 2
+CoolingCooling Lv. 3
+47 	Galeclaw ImageGaleclaw 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 2
+48 	Robinquill ImageRobinquill 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 1
+HandiworkHandiwork Lv. 2
+LumberingLumbering Lv. 1
+Medicine ProductionMedicine Lv. 1
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 2
+48B 	Robinquill Terra ImageRobinquill Terra 	Palworld - Grass Icon Palworld - Ground Icon 	
+HandiworkHandiwork Lv. 2
+LumberingLumbering Lv. 1
+Medicine ProductionMedicine Lv. 1
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 2
+49 	Gorirat ImageGorirat 	Palworld - Neutral Icon 	
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 2
+TransportingTransporting Lv. 3
+49B 	Gorirat Terra ImageGorirat Terra 	Palworld - Ground Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 3
+MiningMining Lv. 2
+50 	Beegarde ImageBeegarde 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 1
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 1
+Medicine ProductionMedicine Lv. 1
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 1
+FarmingFarming Lv. 1 - Honey
+51 	Elizabee ImageElizabee 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+HandiworkHandiwork Lv. 2
+LumberingLumbering Lv. 1
+Medicine ProductionMedicine Lv. 2
+GatheringGathering Lv. 2
+52 	Grintale ImageGrintale 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 2
+53 	Swee ImageSwee 	Palworld - Ice Icon 	
+GatheringGathering Lv. 1
+CoolingCooling Lv. 1
+54 	Sweepa ImageSweepa 	Palworld - Ice Icon 	
+GatheringGathering Lv. 2
+CoolingCooling Lv. 2
+55 	Chillet ImageChillet 	Palworld - Ice Icon Palworld - Dragon Icon 	
+GatheringGathering Lv. 1
+CoolingCooling Lv. 1
+55B 	Chillet Ignis ImageChillet Ignis 	Palworld - Fire Icon Palworld - Dragon Icon 	
+KindlingKindling Lv. 2
+GatheringGathering Lv. 1
+56 	Univolt ImageUnivolt 	Palworld - Electric Icon 	
+LumberingLumbering Lv. 1
+ElectricityElectricity Lv. 2
+57 	Foxcicle ImageFoxcicle 	Palworld - Ice Icon 	
+CoolingCooling Lv. 2
+58 	Pyrin ImagePyrin 	Palworld - Fire Icon 	
+KindlingKindling Lv. 2
+LumberingLumbering Lv. 1
+58B 	Pyrin Noct ImagePyrin Noct 	Palworld - Fire Icon Palworld - Dark Icon 	
+KindlingKindling Lv. 2
+LumberingLumbering Lv. 1
+59 	Reindrix ImageReindrix 	Palworld - Ice Icon 	
+LumberingLumbering Lv. 2
+60 	Rayhound ImageRayhound 	Palworld - Electric Icon 	
+ElectricityElectricity Lv. 2
+61 	Kitsun ImageKitsun 	Palworld - Fire Icon 	
+KindlingKindling Lv. 2
+61B 	Kitsun Noct ImageKitsun Noct 	Palworld - Dark Icon 	
+KindlingKindling Lv. 2
+62 	Dazzi ImageDazzi 	Palworld - Electric Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+ElectricityElectricity Lv. 1
+62B 	Dazzi Noct ImageDazzi Noct 	Palworld - Electric Icon Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 1
+Medicine ProductionMedicine Lv. 1
+TransportingTransporting Lv. 1
+ElectricityElectricity Lv. 1
+63 	Lunaris ImageLunaris 	Palworld - Neutral Icon 	
+HandiworkHandiwork Lv. 3
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+64 	Dinossom ImageDinossom 	Palworld - Grass Icon Palworld - Dragon Icon 	
+PlantingPlanting Lv. 2
+LumberingLumbering Lv. 2
+64B 	Dinossom Lux ImageDinossom Lux 	Palworld - Electric Icon Palworld - Dragon Icon 	
+LumberingLumbering Lv. 2
+ElectricityElectricity Lv. 2
+65 	Surfent ImageSurfent 	Palworld - Water Icon 	
+WateringWatering Lv. 2
+65B 	Surfent Terra ImageSurfent Terra 	Palworld - Ground Icon 	
+GatheringGathering Lv. 1
+66 	Maraith ImageMaraith 	Palworld - Dark Icon 	
+GatheringGathering Lv. 2
+MiningMining Lv. 1
+67 	Digtoise ImageDigtoise 	Palworld - Ground Icon 	
+MiningMining Lv. 3
+68 	Tombat ImageTombat 	Palworld - Dark Icon 	
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 2
+MiningMining Lv. 2
+69 	Lovander ImageLovander 	Palworld - Neutral Icon 	
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 2
+TransportingTransporting Lv. 2
+MiningMining Lv. 1
+70 	Flambelle ImageFlambelle 	Palworld - Fire Icon 	
+KindlingKindling Lv. 1
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+FarmingFarming Lv. 1 - Flame Organ
+71 	Vanwyrm ImageVanwyrm 	Palworld - Fire Icon Palworld - Dark Icon 	
+KindlingKindling Lv. 1
+TransportingTransporting Lv. 3
+71B 	Vanwyrm Cryst ImageVanwyrm Cryst 	Palworld - Ice Icon Palworld - Dark Icon 	
+TransportingTransporting Lv. 3
+CoolingCooling Lv. 2
+72 	Bushi ImageBushi 	Palworld - Fire Icon 	
+KindlingKindling Lv. 2
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 3
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 1
+72B 	Bushi Noct ImageBushi Noct 	Palworld - Fire Icon Palworld - Dark Icon 	
+KindlingKindling Lv. 2
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 3
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 1
+73 	Beakon ImageBeakon 	Palworld - Electric Icon 	
+TransportingTransporting Lv. 3
+ElectricityElectricity Lv. 2
+GatheringGathering Lv. 1
+74 	Ragnahawk ImageRagnahawk 	Palworld - Fire Icon 	
+KindlingKindling Lv. 3
+TransportingTransporting Lv. 3
+75 	Katress ImageKatress 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 2
+TransportingTransporting Lv. 2
+75B 	Katress Ignis ImageKatress Ignis 	Palworld - Fire Icon Palworld - Dark Icon 	
+KindlingKindling Lv. 2
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 2
+TransportingTransporting Lv. 2
+76 	Wixen ImageWixen 	Palworld - Fire Icon 	
+KindlingKindling Lv. 2
+HandiworkHandiwork Lv. 3
+TransportingTransporting Lv. 2
+76B 	Wixen Noct ImageWixen Noct 	Palworld - Fire Icon Palworld - Dark Icon 	
+KindlingKindling Lv. 2
+HandiworkHandiwork Lv. 3
+TransportingTransporting Lv. 2
+77 	Verdash ImageVerdash 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+HandiworkHandiwork Lv. 3
+LumberingLumbering Lv. 2
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 3
+78 	Vaelet ImageVaelet 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 3
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 2
+79 	Sibelyx ImageSibelyx 	Palworld - Ice Icon 	
+Medicine ProductionMedicine Lv. 2
+CoolingCooling Lv. 2
+FarmingFarming Lv. 1 - High Quality Cloth
+80 	Elphidran ImageElphidran 	Palworld - Dragon Icon 	
+LumberingLumbering Lv. 2
+80B 	Elphidran Aqua ImageElphidran Aqua 	Palworld - Water Icon Palworld - Dragon Icon 	
+LumberingLumbering Lv. 2
+WateringWatering Lv. 3
+81 	Kelpsea ImageKelpsea 	Palworld - Water Icon 	
+WateringWatering Lv. 1
+FarmingFarming Lv. 1 - Pal Fluids
+81B 	Kelpsea Ignis ImageKelpsea Ignis 	Palworld - Fire Icon 	
+KindlingKindling Lv. 1
+FarmingFarming Lv. 1 - Flame Organ
+82 	Azurobe ImageAzurobe 	Palworld - Water Icon Palworld - Dragon Icon 	
+WateringWatering Lv. 3
+82B 	Azurobe Cryst ImageAzurobe Cryst 	Palworld - Ice Icon Palworld - Dragon Icon 	
+CoolingCooling Lv. 3
+83 	Cryolinx ImageCryolinx 	Palworld - Ice Icon 	
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 2
+TransportingTransporting Lv. 3
+CoolingCooling Lv. 3
+83B 	Cryolinx Terra ImageCryolinx Terra 	Palworld - Ground Icon 	
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 2
+TransportingTransporting Lv. 3
+MiningMining Lv. 3
+84 	Blazehowl ImageBlazehowl 	Palworld - Fire Icon 	
+KindlingKindling Lv. 3
+LumberingLumbering Lv. 2
+84B 	Blazehowl Noct ImageBlazehowl Noct 	Palworld - Fire Icon Palworld - Dark Icon 	
+KindlingKindling Lv. 3
+LumberingLumbering Lv. 2
+85 	Relaxaurus ImageRelaxaurus 	Palworld - Water Icon Palworld - Dragon Icon 	
+TransportingTransporting Lv. 1
+WateringWatering Lv. 2
+85B 	Relaxaurus Lux ImageRelaxaurus Lux 	Palworld - Electric Icon Palworld - Dragon Icon 	
+TransportingTransporting Lv. 1
+ElectricityElectricity Lv. 3
+86 	Broncherry ImageBroncherry 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 3
+86B 	Broncherry Aqua ImageBroncherry Aqua 	Palworld - Water Icon Palworld - Grass Icon 	
+WateringWatering Lv. 3
+87 	Petallia ImagePetallia 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 3
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 2
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 2
+88 	Reptyro ImageReptyro 	Palworld - Fire Icon Palworld - Ground Icon 	
+KindlingKindling Lv. 3
+MiningMining Lv. 3
+88B 	Reptyro Cryst ImageReptyro Cryst 	Palworld - Ice Icon Palworld - Ground Icon 	
+MiningMining Lv. 3
+CoolingCooling Lv. 3
+89 	Kingpaca ImageKingpaca 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 1
+89B 	Kingpaca Cryst ImageKingpaca Cryst 	Palworld - Ice Icon 	
+GatheringGathering Lv. 1
+CoolingCooling Lv. 3
+90 	Mammorest ImageMammorest 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+LumberingLumbering Lv. 2
+MiningMining Lv. 2
+90B 	Mammorest Cryst ImageMammorest Cryst 	Palworld - Ice Icon 	
+LumberingLumbering Lv. 2
+MiningMining Lv. 2
+CoolingCooling Lv. 2
+91 	Wumpo ImageWumpo 	Palworld - Ice Icon 	
+HandiworkHandiwork Lv. 2
+LumberingLumbering Lv. 3
+TransportingTransporting Lv. 4
+CoolingCooling Lv. 2
+91B 	Wumpo Botan ImageWumpo Botan 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 1
+HandiworkHandiwork Lv. 2
+LumberingLumbering Lv. 3
+TransportingTransporting Lv. 4
+92 	Warsect ImageWarsect 	Palworld - Grass Icon Palworld - Ground Icon 	
+PlantingPlanting Lv. 1
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 3
+TransportingTransporting Lv. 3
+92B 	Warsect Terra ImageWarsect Terra 	Palworld - Ground Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 3
+MiningMining Lv. 3
+93 	Fenglope ImageFenglope 	Palworld - Neutral Icon 	
+LumberingLumbering Lv. 2
+93B 	Fenglope Lux ImageFenglope Lux 	Palworld - Electric Icon 	
+LumberingLumbering Lv. 2
+ElectricityElectricity Lv. 2
+94 	Felbat ImageFelbat 	Palworld - Dark Icon 	
+Medicine ProductionMedicine Lv. 3
+95 	Quivern ImageQuivern 	Palworld - Dragon Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 3
+GatheringGathering Lv. 2
+MiningMining Lv. 2
+95B 	Quivern Botan ImageQuivern Botan 	Palworld - Grass Icon Palworld - Dragon Icon 	
+PlantingPlanting Lv. 2
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 3
+GatheringGathering Lv. 2
+MiningMining Lv. 2
+96 	Blazamut ImageBlazamut 	Palworld - Fire Icon 	
+KindlingKindling Lv. 3
+MiningMining Lv. 4
+96B 	Blazamut Ryu ImageBlazamut Ryu 	Palworld - Fire Icon Palworld - Dragon Icon 	
+KindlingKindling Lv. 4
+MiningMining Lv. 4
+97 	Helzephyr ImageHelzephyr 	Palworld - Dark Icon 	
+TransportingTransporting Lv. 3
+97B 	Helzephyr Lux ImageHelzephyr Lux 	Palworld - Electric Icon Palworld - Dark Icon 	
+TransportingTransporting Lv. 3
+ElectricityElectricity Lv. 3
+98 	Astegon ImageAstegon 	Palworld - Dark Icon Palworld - Dragon Icon 	
+HandiworkHandiwork Lv. 1
+MiningMining Lv. 4
+99 	Menasting ImageMenasting 	Palworld - Ground Icon Palworld - Dark Icon 	
+LumberingLumbering Lv. 2
+MiningMining Lv. 3
+99B 	Menasting Terra ImageMenasting Terra 	Palworld - Ground Icon 	
+LumberingLumbering Lv. 2
+MiningMining Lv. 3
+100 	Anubis ImageAnubis 	Palworld - Ground Icon 	
+HandiworkHandiwork Lv. 4
+TransportingTransporting Lv. 2
+MiningMining Lv. 3
+101 	Jormuntide ImageJormuntide 	Palworld - Water Icon Palworld - Dragon Icon 	
+WateringWatering Lv. 4
+101B 	Jormuntide Ignis ImageJormuntide Ignis 	Palworld - Fire Icon Palworld - Dragon Icon 	
+KindlingKindling Lv. 4
+102 	Suzaku ImageSuzaku 	Palworld - Fire Icon 	
+KindlingKindling Lv. 3
+102B 	Suzaku Aqua ImageSuzaku Aqua 	Palworld - Water Icon 	
+WateringWatering Lv. 3
+103 	Grizzbolt ImageGrizzbolt 	Palworld - Electric Icon 	
+HandiworkHandiwork Lv. 2
+LumberingLumbering Lv. 2
+TransportingTransporting Lv. 3
+ElectricityElectricity Lv. 3
+104 	Lyleen ImageLyleen 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 4
+HandiworkHandiwork Lv. 3
+Medicine ProductionMedicine Lv. 3
+GatheringGathering Lv. 2
+104B 	Lyleen Noct ImageLyleen Noct 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 3
+Medicine ProductionMedicine Lv. 3
+GatheringGathering Lv. 2
+105 	Faleris ImageFaleris 	Palworld - Fire Icon 	
+KindlingKindling Lv. 3
+TransportingTransporting Lv. 3
+105B 	Faleris Aqua ImageFaleris Aqua 	Palworld - Water Icon 	
+TransportingTransporting Lv. 3
+WateringWatering Lv. 4
+106 	Orserk ImageOrserk 	Palworld - Electric Icon Palworld - Dragon Icon 	
+HandiworkHandiwork Lv. 2
+TransportingTransporting Lv. 3
+ElectricityElectricity Lv. 4
+107 	Shadowbeak ImageShadowbeak 	Palworld - Dark Icon 	
+GatheringGathering Lv. 1
+108 	Paladius ImagePaladius 	Palworld - Neutral Icon 	
+LumberingLumbering Lv. 2
+MiningMining Lv. 2
+109 	Necromus ImageNecromus 	Palworld - Dark Icon 	
+LumberingLumbering Lv. 2
+MiningMining Lv. 2
+110 	Frostallion ImageFrostallion 	Palworld - Ice Icon 	
+CoolingCooling Lv. 4
+110B 	Frostallion Noct ImageFrostallion Noct 	Palworld - Dark Icon 	
+GatheringGathering Lv. 4
+111 	Jetragon ImageJetragon 	Palworld - Dragon Icon 	
+GatheringGathering Lv. 3
+112 	Bellanoir ImageBellanoir 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 4
+TransportingTransporting Lv. 2
+112B 	Bellanoir Libero ImageBellanoir Libero 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 4
+TransportingTransporting Lv. 2
+113 	Selyne ImageSelyne 	Palworld - Dark Icon Palworld - Neutral Icon 	
+HandiworkHandiwork Lv. 4
+Medicine ProductionMedicine Lv. 3
+TransportingTransporting Lv. 3
+114 	Croajiro ImageCroajiro 	Palworld - Water Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+GatheringGathering Lv. 1
+114B 	Croajiro Noct ImageCroajiro Noct 	Palworld - Water Icon Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+GatheringGathering Lv. 1
+115 	Lullu ImageLullu 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 2
+GatheringGathering Lv. 1
+116 	Shroomer ImageShroomer 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 2
+GatheringGathering Lv. 2
+116B 	Shroomer Noct ImageShroomer Noct 	Palworld - Grass Icon Palworld - Dark Icon 	
+PlantingPlanting Lv. 2
+HandiworkHandiwork Lv. 1
+LumberingLumbering Lv. 2
+GatheringGathering Lv. 2
+117 	Kikit ImageKikit 	Palworld - Ground Icon 	
+MiningMining Lv. 1
+118 	Sootseer ImageSootseer 	Palworld - Fire Icon Palworld - Dark Icon 	
+KindlingKindling Lv. 3
+HandiworkHandiwork Lv. 2
+GatheringGathering Lv. 1
+MiningMining Lv. 2
+FarmingFarming Lv. 1 - Bone
+119 	Prixter ImagePrixter 	Palworld - Ground Icon Palworld - Dark Icon 	
+LumberingLumbering Lv. 3
+Medicine ProductionMedicine Lv. 1
+GatheringGathering Lv. 1
+120 	Knocklem ImageKnocklem 	Palworld - Ground Icon 	
+TransportingTransporting Lv. 4
+GatheringGathering Lv. 3
+MiningMining Lv. 4
+121 	Yakumo ImageYakumo 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 2
+122 	Dogen ImageDogen 	Palworld - Neutral Icon 	
+HandiworkHandiwork Lv. 3
+LumberingLumbering Lv. 2
+Medicine ProductionMedicine Lv. 1
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 2
+123 	Dazemu ImageDazemu 	Palworld - Ground Icon 	
+GatheringGathering Lv. 2
+124 	Mimog ImageMimog 	Palworld - Neutral Icon 	
+GatheringGathering Lv. 1
+125 	Xenovader ImageXenovader 	Palworld - Dark Icon 	
+LumberingLumbering Lv. 2
+TransportingTransporting Lv. 2
+126 	Xenogard ImageXenogard 	Palworld - Dragon Icon 	
+MiningMining Lv. 3
+127 	Xenolord ImageXenolord 	Palworld - Dark Icon Palworld - Dragon Icon 	
+GatheringGathering Lv. 1
+128 	Nitemary ImageNitemary 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 3
+TransportingTransporting Lv. 2
+129 	Starryon ImageStarryon 	Palworld - Dark Icon 	
+GatheringGathering Lv. 2
+130 	Silvegis ImageSilvegis 	Palworld - Dragon Icon 	
+LumberingLumbering Lv. 3
+131 	Smokie ImageSmokie 	Palworld - Dark Icon 	
+GatheringGathering Lv. 2
+132 	Celesdir ImageCelesdir 	Palworld - Neutral Icon 	
+LumberingLumbering Lv. 4
+GatheringGathering Lv. 1
+133 	Omascul ImageOmascul 	Palworld - Dark Icon 	
+GatheringGathering Lv. 1
+134 	Splatterina ImageSplatterina 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 4
+LumberingLumbering Lv. 1
+Medicine ProductionMedicine Lv. 3
+TransportingTransporting Lv. 2
+135 	Tarantriss ImageTarantriss 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 2
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 2
+136 	Azurmane ImageAzurmane 	Palworld - Electric Icon 	
+ElectricityElectricity Lv. 4
+GatheringGathering Lv. 1
+137 	Bastigor ImageBastigor 	Palworld - Ice Icon 	
+LumberingLumbering Lv. 3
+MiningMining Lv. 3
+CoolingCooling Lv. 4
+138 	Prunelia ImagePrunelia 	Palworld - Grass Icon Palworld - Dark Icon 	
+PlantingPlanting Lv. 3
+HandiworkHandiwork Lv. 1
+Medicine ProductionMedicine Lv. 3
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 2
+139 	Nyafia ImageNyafia 	Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 3
+LumberingLumbering Lv. 2
+TransportingTransporting Lv. 2
+GatheringGathering Lv. 2
+140 	Gildane ImageGildane 	Palworld - Ground Icon 	
+GatheringGathering Lv. 2
+141 	Herbil ImageHerbil 	Palworld - Grass Icon Palworld - Neutral Icon 	
+PlantingPlanting Lv. 2
+TransportingTransporting Lv. 1
+GatheringGathering Lv. 1
+142 	Icelyn ImageIcelyn 	Palworld - Ice Icon 	
+HandiworkHandiwork Lv. 2
+Medicine ProductionMedicine Lv. 2
+TransportingTransporting Lv. 1
+CoolingCooling Lv. 3
+143 	Frostplume ImageFrostplume 	Palworld - Ice Icon 	
+GatheringGathering Lv. 1
+CoolingCooling Lv. 2
+144 	Palumba ImagePalumba 	Palworld - Grass Icon 	
+PlantingPlanting Lv. 2
+GatheringGathering Lv. 2
+MiningMining Lv. 3
+145 	Braloha ImageBraloha 	Palworld - Grass Icon Palworld - Ground Icon 	
+PlantingPlanting Lv. 4
+GatheringGathering Lv. 4
+MiningMining Lv. 2
+146 	Munchill ImageMunchill 	Palworld - Water Icon Palworld - Ice Icon 	
+TransportingTransporting Lv. 1
+WateringWatering Lv. 1
+CoolingCooling Lv. 2
+147 	Polapup ImagePolapup 	Palworld - Water Icon Palworld - Ice Icon 	
+WateringWatering Lv. 2
+CoolingCooling Lv. 3
+148 	Turtacle ImageTurtacle 	Palworld - Water Icon 	
+TransportingTransporting Lv. 1
+WateringWatering Lv. 2
+MiningMining Lv. 1
+148B 	Turtacle Terra ImageTurtacle Terra 	Palworld - Water Icon Palworld - Ground Icon 	
+PlantingPlanting Lv. 4
+TransportingTransporting Lv. 1
+MiningMining Lv. 1
+149 	Jellroy ImageJellroy 	Palworld - Water Icon Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 1
+Medicine ProductionMedicine Lv. 1
+TransportingTransporting Lv. 1
+WateringWatering Lv. 2
+150 	Jelliette ImageJelliette 	Palworld - Water Icon 	
+HandiworkHandiwork Lv. 1
+TransportingTransporting Lv. 1
+WateringWatering Lv. 2
+151 	Gloopie ImageGloopie 	Palworld - Water Icon Palworld - Dark Icon 	
+HandiworkHandiwork Lv. 2
+TransportingTransporting Lv. 2
+WateringWatering Lv. 2
+152 	Finsider ImageFinsider 	Palworld - Water Icon 	
+TransportingTransporting Lv. 1
+WateringWatering Lv. 2
+152B 	Finsider Ignis ImageFinsider Ignis 	Palworld - Fire Icon Palworld - Water Icon 	
+KindlingKindling Lv. 2
+TransportingTransporting Lv. 1
+WateringWatering Lv. 2
+153 	Ghangler ImageGhangler 	Palworld - Water Icon Palworld - Dark Icon 	
+TransportingTransporting Lv. 2
+WateringWatering Lv. 4
+153B 	Ghangler Ignis ImageGhangler Ignis 	Palworld - Fire Icon Palworld - Water Icon 	
+KindlingKindling Lv. 3
+TransportingTransporting Lv. 2
+WateringWatering Lv. 4
+154 	Whalaska ImageWhalaska 	Palworld - Water Icon Palworld - Ice Icon 	
+WateringWatering Lv. 3
+CoolingCooling Lv. 4
+154B 	Whalaska Ignis ImageWhalaska Ignis 	Palworld - Fire Icon Palworld - Ice Icon 	
+KindlingKindling Lv. 3
+CoolingCooling Lv. 4
+155 	Neptilius ImageNeptilius 	Palworld - Water Icon 	
+WateringWatering Lv. 4
+156 	Hartalis ImageHartalis 	Palworld - Neutral Icon 	
+LumberingLumbering Lv. 4
+GatheringGathering Lv. 3
